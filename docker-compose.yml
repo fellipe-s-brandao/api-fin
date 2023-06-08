@@ -10,7 +10,7 @@ services:
       environment:
         - POSTGRES_USER=boraAdmin
         - POSTGRES_PASSWORD=AdminBora#123@
-        - POSTGRES_DB=bora
+        - POSTGRES_DB=finances
       volumes:
           - pgdata:/data/postgres
 

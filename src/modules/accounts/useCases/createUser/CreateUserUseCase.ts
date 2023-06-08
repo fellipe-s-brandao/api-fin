@@ -33,7 +33,7 @@ class CreateUserUseCase {
       username: data.username,
       email: data.email,
       password: passwordHash,
-      birth_date: data.birth_date,
+      birthDate: data.birthDate,
       gender: data.gender,
       phone: data.phone,
     })
