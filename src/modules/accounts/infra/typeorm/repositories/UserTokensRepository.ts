@@ -1,40 +1,46 @@
-import { ICreateUserTokenDTO } from "@modules/accounts/dtos/ICreateUserTokenDTO";
-import { IUserTokensRepository } from "@modules/accounts/repositories/IUserTokensRepository";
-import { getRepository, Repository } from "typeorm";
-import { UserTokens } from "../entities/UserTokens";
+import { ICreateUserTokenDTO } from '@modules/accounts/useCases/refreshToken/dtos/ICreateUserTokenDTO'
+import { IUserTokensRepository } from '@modules/accounts/repositories/IUserTokensRepository'
+import { getRepository, Repository } from 'typeorm'
+import { UserTokens } from '../entities/UserTokens'
 
-class UserTokensRepository implements IUserTokensRepository{
-    private repository: Repository<UserTokens>
+class UserTokensRepository implements IUserTokensRepository {
+  private repository: Repository<UserTokens>
 
-    constructor() {
-        this.repository = getRepository(UserTokens);
-    }
+  constructor() {
+    this.repository = getRepository(UserTokens)
+  }
 
-    async create({ expires_date, refresh_token, user_id }: ICreateUserTokenDTO): Promise<UserTokens> {
-       const userToken = this.repository.create({
-        expires_date,
-        refresh_token,
-        user_id
-       });
+  async create({
+    expiresDate,
+    refreshToken,
+    userId,
+  }: ICreateUserTokenDTO): Promise<UserTokens> {
+    const userToken = this.repository.create({
+      expiresDate,
+      refreshToken,
+      userId,
+    })
 
-       await this.repository.save(userToken);
+    await this.repository.save(userToken)
 
-       return userToken;
-    }
+    return userToken
+  }
 
-    async findByUserIdAndRefreshToken(user_id: string, refresh_token: string): Promise<UserTokens> {
-        const users_token = await this.repository.findOne({
-            user_id,
-            refresh_token
-        });
+  async findByUserIdAndRefreshToken(
+    userId: string,
+    refreshToken: string,
+  ): Promise<UserTokens> {
+    const usersToken = await this.repository.findOne({
+      userId,
+      refreshToken,
+    })
 
-        return users_token;
-    }
+    return usersToken
+  }
 
-    async deleteById(id: string): Promise<void> {
-        await this.repository.delete(id);
-    }
-
+  async deleteById(id: string): Promise<void> {
+    await this.repository.delete(id)
+  }
 }
 
 export { UserTokensRepository }

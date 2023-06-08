@@ -5,7 +5,8 @@
     "license": "MIT",
     "scripts": {
         "dev": "ts-node-dev -r tsconfig-paths/register --inspect=0.0.0.0:9229 --transpile-only --ignore-watch node_modules --respawn src/shared/infra/http/server.ts",
-        "typeorm": "ts-node-dev ./node_modules/typeorm/cli"
+        "typeorm": "ts-node-dev ./node_modules/typeorm/cli",
+        "lint": "eslint src --ext .ts --fix"
     },
     "dependencies": {
         "bcrypt": "^5.0.1",
@@ -21,10 +22,12 @@
         "uuid": "^8.3.2"
     },
     "devDependencies": {
+        "@rocketseat/eslint-config": "^1.2.0",
         "@types/bcrypt": "^5.0.0",
         "@types/express": "^4.17.13",
         "@types/jsonwebtoken": "^8.5.9",
         "@types/uuid": "^8.3.4",
+        "eslint": "^8.42.0",
         "ts-jest": "^29.0.1",
         "ts-node-dev": "^2.0.0",
         "tsconfig-paths": "^4.1.0",

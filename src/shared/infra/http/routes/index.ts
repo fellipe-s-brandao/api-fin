@@ -1,11 +1,11 @@
-import { Router } from 'express';
+import { Router } from 'express'
 import { authenticateRoutes } from './authenticate.routes'
-import { usersRoutes } from './users.routes';
+import { usersRoutes } from './users.routes'
 
-const router = Router();
+const router = Router()
 
-router.use("/users", usersRoutes);
+router.use('/users', usersRoutes)
 
-router.use(authenticateRoutes);
+router.use(authenticateRoutes)
 
-export { router };
+export { router }
