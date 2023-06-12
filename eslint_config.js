@@ -23,7 +23,7 @@ module.exports = {
       },
     ],
     'no-new': 'off',
-    'no-useless-constructor': 'off'
+    'no-useless-constructor': 'off',
   },
   settings: {
     'import/parsers': {

@@ -1,4 +1,4 @@
-import { ICreateExpansesDTO } from '../useCases/createExpanses/dtos/ICreateExpansesDTO'
+import { ICreateExpansesDTO } from '../useCases/ExpansesCreate/dtos/ICreateExpansesDTO'
 
 interface IExpensesRepository {
   create(data: ICreateExpansesDTO): Promise<void>

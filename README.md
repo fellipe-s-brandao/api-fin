@@ -22,5 +22,5 @@
 - [ ] Editar o tipo de Lucro
 - [ ] Excluir o tipo de Lucro
 
-### Investiment
+### Investimentos
 (...)

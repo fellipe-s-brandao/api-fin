@@ -5,7 +5,6 @@ interface ICreateExpansesDTO {
   expenseTypeId: string
   expenseDate: Date
   userId: string
-  createAt: Date
 }
 
 export { ICreateExpansesDTO }
