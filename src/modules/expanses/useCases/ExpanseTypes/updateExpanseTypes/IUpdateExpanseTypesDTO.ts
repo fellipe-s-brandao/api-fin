@@ -1,9 +1,6 @@
-interface IUpdateExpansesDTO {
+interface IUpdateExpanseTypesDTO {
   name?: string
   description?: string
-  amountSpent?: number
-  expenseTypeId?: string
-  expenseDate?: Date
 }
 
-export { IUpdateExpansesDTO }
+export { IUpdateExpanseTypesDTO }
