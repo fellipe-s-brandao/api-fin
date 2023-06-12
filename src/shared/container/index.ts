@@ -7,10 +7,10 @@ import { UsersRepository } from '@modules/accounts/infra/typeorm/repositories/Us
 
 import { IUserTokensRepository } from '@modules/accounts/repositories/IUserTokensRepository'
 import { UserTokensRepository } from '@modules/accounts/infra/typeorm/repositories/UserTokensRepository'
-import { IExpensesRepository } from '@modules/expanses/repositories/IExpensesRepository'
-import { ExpensesRepository } from '@modules/expanses/infra/typeorm/repositories/ExpensesRepository'
-import { ExpenseTypesRepository } from '@modules/expanses/infra/typeorm/repositories/ExpenseTypesRepository'
-import { IExpenseTypesRepository } from '@modules/expanses/repositories/IExpenseTypesRepository'
+import { IExpensesRepository } from '@modules/expenses/repositories/IExpensesRepository'
+import { ExpensesRepository } from '@modules/expenses/infra/typeorm/repositories/ExpensesRepository'
+import { IExpenseTypesRepository } from '@modules/expenses/repositories/IExpenseTypesRepository'
+import { ExpenseTypesRepository } from '@modules/expenses/infra/typeorm/repositories/ExpenseTypesRepository'
 
 /**
  * Account
