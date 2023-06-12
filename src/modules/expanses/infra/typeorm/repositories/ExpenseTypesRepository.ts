@@ -1,8 +1,8 @@
 import { getRepository, Repository } from 'typeorm'
 import { ExpanseType } from '../entities/ExpanseType'
 import { IExpenseTypesRepository } from '@modules/expanses/repositories/IExpenseTypesRepository'
-import { IUpdateExpanseTypesDTO } from '@modules/expanses/useCases/ExpanseTypes/updateExpanseTypes/IUpdateExpanseTypesDTO'
-import { ICreateExpanseTypesDTO } from '@modules/expanses/useCases/ExpanseTypes/createExpanseTypes/ICreateExpanseTypesDTO'
+import { ICreateExpanseTypesDTO } from '@modules/expanses/useCases/ExpanseTypes/createExpanseTypes/dto/ICreateExpanseTypesDTO'
+import { IUpdateExpanseTypesDTO } from '@modules/expanses/useCases/ExpanseTypes/updateExpanseTypes/dto/IUpdateExpanseTypesDTO'
 
 class ExpenseTypesRepository implements IExpenseTypesRepository {
   private repository: Repository<ExpanseType>

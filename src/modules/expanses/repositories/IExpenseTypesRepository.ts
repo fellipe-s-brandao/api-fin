@@ -1,6 +1,6 @@
 import { ExpanseType } from '../infra/typeorm/entities/ExpanseType'
-import { ICreateExpanseTypesDTO } from '../useCases/ExpanseTypes/createExpanseTypes/ICreateExpanseTypesDTO'
-import { IUpdateExpanseTypesDTO } from '../useCases/ExpanseTypes/updateExpanseTypes/IUpdateExpanseTypesDTO'
+import { ICreateExpanseTypesDTO } from '../useCases/ExpanseTypes/createExpanseTypes/dto/ICreateExpanseTypesDTO'
+import { IUpdateExpanseTypesDTO } from '../useCases/ExpanseTypes/updateExpanseTypes/dto/IUpdateExpanseTypesDTO'
 
 interface IExpenseTypesRepository {
   create(data: ICreateExpanseTypesDTO): Promise<void>

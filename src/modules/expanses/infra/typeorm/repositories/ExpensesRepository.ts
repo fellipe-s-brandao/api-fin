@@ -1,9 +1,8 @@
 import { getRepository, Repository } from 'typeorm'
 import { Expanse } from '../entities/Expanse'
 import { IExpensesRepository } from '@modules/expanses/repositories/IExpensesRepository'
-import { ICreateExpansesDTO } from '@modules/expanses/useCases/Expanses/createExpanses/ICreateExpansesDTO'
-import { IUpdateExpansesDTO } from '@modules/expanses/useCases/Expanses/updateExpanses/IUpdateExpansesDTO'
-
+import { ICreateExpansesDTO } from '@modules/expanses/useCases/Expanses/createExpanses/dto/ICreateExpansesDTO'
+import { IUpdateExpansesDTO } from '@modules/expanses/useCases/Expanses/updateExpanses/dto/IUpdateExpansesDTO'
 class ExpensesRepository implements IExpensesRepository {
   private repository: Repository<Expanse>
 

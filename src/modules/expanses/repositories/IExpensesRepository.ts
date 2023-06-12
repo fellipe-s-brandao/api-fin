@@ -1,6 +1,6 @@
 import { Expanse } from '../infra/typeorm/entities/Expanse'
-import { ICreateExpansesDTO } from '../useCases/Expanses/createExpanses/ICreateExpansesDTO'
-import { IUpdateExpansesDTO } from '../useCases/Expanses/updateExpanses/IUpdateExpansesDTO'
+import { ICreateExpansesDTO } from '../useCases/Expanses/createExpanses/dto/ICreateExpansesDTO'
+import { IUpdateExpansesDTO } from '../useCases/Expanses/updateExpanses/dto/IUpdateExpansesDTO'
 
 interface IExpensesRepository {
   create(data: ICreateExpansesDTO): Promise<void>
