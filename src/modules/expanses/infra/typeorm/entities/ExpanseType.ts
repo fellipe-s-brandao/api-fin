@@ -10,7 +10,7 @@ import {
 import { v4 as uuidV4 } from 'uuid'
 
 @Entity('expansesTypes')
-class ExpanseTypes {
+class ExpanseType {
   @PrimaryColumn()
   id: string
 
@@ -37,4 +37,4 @@ class ExpanseTypes {
   }
 }
 
-export { ExpanseTypes }
+export { ExpanseType }

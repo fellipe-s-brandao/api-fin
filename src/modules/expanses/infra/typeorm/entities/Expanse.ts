@@ -8,10 +8,10 @@ import {
   PrimaryColumn,
 } from 'typeorm'
 import { v4 as uuidV4 } from 'uuid'
-import { ExpanseTypes } from './ExpanseTypes'
+import { ExpanseType } from './ExpanseType'
 
 @Entity('expanses')
-class Expanses {
+class Expanse {
   @PrimaryColumn()
   id: string
 
@@ -27,9 +27,9 @@ class Expanses {
   @Column()
   expenseTypeId: string
 
-  @ManyToOne(() => ExpanseTypes)
+  @ManyToOne(() => ExpanseType)
   @JoinColumn({ name: 'expenseTypeId' })
-  expanseTypes: ExpanseTypes
+  expanseTypes: ExpanseType
 
   @Column()
   userId: string
@@ -51,4 +51,4 @@ class Expanses {
   }
 }
 
-export { Expanses }
+export { Expanse }

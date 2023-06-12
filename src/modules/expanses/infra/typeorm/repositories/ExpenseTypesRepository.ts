@@ -1,13 +1,13 @@
 import { getRepository, Repository } from 'typeorm'
-import { IExpensesRepository } from '@modules/expanses/repositories/IExpensesRepository'
-import { ICreateExpanseTypesDTO } from '@modules/expanses/useCases/ExpanseTypesCreate/dtos/ICreateExpanseTypesDTO'
-import { ExpanseTypes } from '../entities/ExpanseTypes'
+import { ICreateExpanseTypesDTO } from '@modules/expanses/useCases/ExpanseTypes/dtos/ICreateExpanseTypesDTO'
+import { ExpanseType } from '../entities/ExpanseType'
+import { IExpenseTypesRepository } from '@modules/expanses/repositories/IExpenseTypesRepository'
 
-class ExpenseTypesRepository implements IExpensesRepository {
-  private repository: Repository<ExpanseTypes>
+class ExpenseTypesRepository implements IExpenseTypesRepository {
+  private repository: Repository<ExpanseType>
 
   constructor() {
-    this.repository = getRepository(ExpanseTypes)
+    this.repository = getRepository(ExpanseType)
   }
 
   async create(data: ICreateExpanseTypesDTO): Promise<void> {
