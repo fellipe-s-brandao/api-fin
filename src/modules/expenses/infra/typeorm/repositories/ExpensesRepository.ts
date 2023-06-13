@@ -13,9 +13,9 @@ class ExpensesRepository implements IExpensesRepository {
 
   async create(data: ICreateExpensesDTO): Promise<Expense> {
     try {
-      const expense = this.repository.create(data)
+      let expense = this.repository.create(data)
 
-      await this.repository.save(expense)
+      expense = await this.repository.save(expense)
 
       return expense
     } catch (error) {
@@ -41,7 +41,7 @@ class ExpensesRepository implements IExpensesRepository {
 
   async getById(id: string): Promise<Expense> {
     try {
-      return await this.repository.findOne(id)
+      return await this.repository.findOne({ where: { id } })
     } catch (error) {
       throw new QueryError(error)
     }

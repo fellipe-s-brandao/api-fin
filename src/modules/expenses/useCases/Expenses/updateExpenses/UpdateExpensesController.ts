@@ -22,7 +22,7 @@ class UpdateExpensesController {
       userId,
     })
 
-    return response.status(201).json(expense)
+    return response.status(200).json(expense)
   }
 }
 

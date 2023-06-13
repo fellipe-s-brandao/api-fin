@@ -2,7 +2,6 @@ import { IExpenseTypesRepository } from '@modules/expenses/repositories/IExpense
 import { getRepository, Repository } from 'typeorm'
 import { ExpenseType } from '../entities/ExpenseType'
 import { ICreateExpensesDTO } from '@modules/expenses/useCases/Expenses/createExpenses/dto/ICreateExpensesDTO'
-import { IUpdateExpansesDTO } from '@modules/expenses/useCases/Expenses/updateExpenses/dto/IUpdateExpansesDTO'
 import { QueryError } from '@shared/errors/QueryError'
 
 class ExpenseTypesRepository implements IExpenseTypesRepository {
@@ -16,14 +15,6 @@ class ExpenseTypesRepository implements IExpenseTypesRepository {
     try {
       const expenseType = this.repository.create(data)
       await this.repository.save(expenseType)
-    } catch (error) {
-      throw new QueryError(error)
-    }
-  }
-
-  async update(data: IUpdateExpansesDTO, id: string): Promise<void> {
-    try {
-      await this.repository.update(id, data)
     } catch (error) {
       throw new QueryError(error)
     }

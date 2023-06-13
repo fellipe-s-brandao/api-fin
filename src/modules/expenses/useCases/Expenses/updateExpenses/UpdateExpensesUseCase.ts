@@ -31,13 +31,16 @@ class UpdateExpensesUseCase {
       throw new AppError('No item was provided')
     }
 
-    const expense = await this.expensesRepository.getById(data.id)
+    let expense = await this.expensesRepository.getById(data.id)
 
     if (!expense) {
       throw new AppError('Expense not found', 404)
     }
 
-    return await this.expensesRepository.create(data)
+    expense = Object.assign(expense, data)
+    console.log(expense)
+
+    return await this.expensesRepository.create(expense)
   }
 }
 
