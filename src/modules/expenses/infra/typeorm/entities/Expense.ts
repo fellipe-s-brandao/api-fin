@@ -39,7 +39,7 @@ class Expense {
   user: User
 
   @Column()
-  expiresDate: Date
+  expenseDate: Date
 
   @CreateDateColumn()
   createdAt: Date

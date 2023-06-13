@@ -3,7 +3,7 @@ import { ICreateExpensesDTO } from '../useCases/Expenses/createExpenses/dto/ICre
 import { IUpdateExpansesDTO } from '../useCases/Expenses/updateExpenses/dto/IUpdateExpansesDTO'
 
 interface IExpensesRepository {
-  create(data: ICreateExpensesDTO): Promise<void>
+  create(data: ICreateExpensesDTO): Promise<Expense>
   update(data: IUpdateExpansesDTO, id: string): Promise<void>
   delete(id: string): Promise<void>
   getAll(): Promise<Expense[]>

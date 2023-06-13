@@ -13,15 +13,16 @@ export async function ensureAuthenticated(
   response: Response,
   next: NextFunction,
 ) {
-  const authHeader = request.headers.authorization
-  const usersTokensRepository = new UserTokensRepository()
-
-  if (!authHeader) {
-    new AppError('Token missing', 401)
-  }
-
-  const [, token] = authHeader.split(' ')
   try {
+    const authHeader = request.headers.authorization
+    const usersTokensRepository = new UserTokensRepository()
+
+    if (!authHeader || authHeader === undefined) {
+      throw new AppError('Token missing', 401)
+    }
+
+    const [, token] = authHeader.split(' ')
+
     const { sub: userId } = verify(token, auth.secretRefreshToken) as IPayload
 
     const user = usersTokensRepository.findByUserIdAndRefreshToken(

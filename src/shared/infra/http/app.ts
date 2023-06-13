@@ -7,6 +7,7 @@ import { AppError } from '@shared/errors/AppError'
 import '@shared/container'
 
 import createConnection from '@shared/infra/typeorm'
+import { QueryError } from '@shared/errors/QueryError'
 createConnection()
 
 const app = express()
@@ -16,7 +17,7 @@ app.use(router)
 
 app.use(
   (err: Error, request: Request, response: Response, next: NextFunction) => {
-    if (err instanceof AppError) {
+    if (err instanceof AppError || err instanceof QueryError) {
       return response.status(err.statusCode).json({
         message: err.message,
       })

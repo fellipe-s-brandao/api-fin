@@ -3,6 +3,7 @@ import { getRepository, Repository } from 'typeorm'
 import { ExpenseType } from '../entities/ExpenseType'
 import { ICreateExpensesDTO } from '@modules/expenses/useCases/Expenses/createExpenses/dto/ICreateExpensesDTO'
 import { IUpdateExpansesDTO } from '@modules/expenses/useCases/Expenses/updateExpenses/dto/IUpdateExpansesDTO'
+import { QueryError } from '@shared/errors/QueryError'
 
 class ExpenseTypesRepository implements IExpenseTypesRepository {
   private repository: Repository<ExpenseType>
@@ -12,25 +13,44 @@ class ExpenseTypesRepository implements IExpenseTypesRepository {
   }
 
   async create(data: ICreateExpensesDTO): Promise<void> {
-    const expenseType = this.repository.create(data)
-
-    await this.repository.save(expenseType)
+    try {
+      const expenseType = this.repository.create(data)
+      await this.repository.save(expenseType)
+    } catch (error) {
+      throw new QueryError()
+    }
   }
 
   async update(data: IUpdateExpansesDTO, id: string): Promise<void> {
-    await this.repository.update(id, data)
+    try {
+      await this.repository.update(id, data)
+    } catch (error) {
+      throw new QueryError()
+    }
   }
 
   async delete(id: string): Promise<void> {
-    await this.repository.delete(id)
+    try {
+      await this.repository.delete(id)
+    } catch (error) {
+      throw new QueryError()
+    }
   }
 
   async getAll(): Promise<ExpenseType[]> {
-    return await this.repository.find()
+    try {
+      return await this.repository.find()
+    } catch (error) {
+      throw new QueryError()
+    }
   }
 
   async getById(id: string): Promise<ExpenseType> {
-    return await this.repository.findOne(id)
+    try {
+      return await this.repository.findOne(id)
+    } catch (error) {
+      throw new QueryError()
+    }
   }
 }
 

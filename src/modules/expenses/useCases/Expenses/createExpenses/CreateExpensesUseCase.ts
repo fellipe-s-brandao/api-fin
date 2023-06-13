@@ -1,3 +1,4 @@
+import { Expense } from '@modules/expenses/infra/typeorm/entities/Expense'
 import { IExpensesRepository } from '@modules/expenses/repositories/IExpensesRepository'
 import { AppError } from '@shared/errors/AppError'
 import { inject, injectable } from 'tsyringe'
@@ -18,7 +19,7 @@ class CreateExpensesUseCase {
     private expensesRepository: IExpensesRepository,
   ) {}
 
-  async execute(data: IRequest): Promise<void> {
+  async execute(data: IRequest): Promise<Expense> {
     if (!data.name) {
       throw new AppError('Name is empty')
     }
@@ -34,6 +35,18 @@ class CreateExpensesUseCase {
     if (!data.expenseTypeId) {
       throw new AppError('Expense type is empty')
     }
+
+    if (!data.expenseTypeId) {
+      throw new AppError('Expense date is empty')
+    }
+
+    const expense = this.expensesRepository.create(data)
+
+    if (!expense) {
+      throw new AppError('Rrror creating expense', 500)
+    }
+
+    return expense
   }
 }
 
