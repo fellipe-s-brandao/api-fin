@@ -6,7 +6,7 @@ interface IExpensesRepository {
   create(data: ICreateExpensesDTO): Promise<Expense>
   update(data: IUpdateExpansesDTO, id: string): Promise<void>
   delete(id: string): Promise<void>
-  getAll(): Promise<Expense[]>
+  getAllByUserId(userId: string): Promise<Expense[]>
   getById(id: string): Promise<Expense>
 }
 

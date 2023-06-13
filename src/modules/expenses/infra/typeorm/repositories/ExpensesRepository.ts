@@ -40,9 +40,9 @@ class ExpensesRepository implements IExpensesRepository {
     }
   }
 
-  async getAll(): Promise<Expense[]> {
+  async getAllByUserId(userId: string): Promise<Expense[]> {
     try {
-      return await this.repository.find()
+      return await this.repository.find({ where: { userId } })
     } catch (error) {
       throw new QueryError()
     }
