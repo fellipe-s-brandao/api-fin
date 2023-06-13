@@ -2,7 +2,6 @@ import { IExpensesRepository } from '@modules/expenses/repositories/IExpensesRep
 import { getRepository, Repository } from 'typeorm'
 import { Expense } from '../entities/Expense'
 import { ICreateExpensesDTO } from '@modules/expenses/useCases/Expenses/createExpenses/dto/ICreateExpensesDTO'
-import { IUpdateExpansesDTO } from '@modules/expenses/useCases/Expenses/updateExpenses/dto/IUpdateExpansesDTO'
 import { QueryError } from '@shared/errors/QueryError'
 
 class ExpensesRepository implements IExpensesRepository {
@@ -20,15 +19,7 @@ class ExpensesRepository implements IExpensesRepository {
 
       return expense
     } catch (error) {
-      throw new QueryError()
-    }
-  }
-
-  async update(data: IUpdateExpansesDTO, id: string): Promise<void> {
-    try {
-      await this.repository.update(id, data)
-    } catch (error) {
-      throw new QueryError()
+      throw new QueryError(error)
     }
   }
 
@@ -36,7 +27,7 @@ class ExpensesRepository implements IExpensesRepository {
     try {
       await this.repository.delete(id)
     } catch (error) {
-      throw new QueryError()
+      throw new QueryError(error)
     }
   }
 
@@ -44,7 +35,7 @@ class ExpensesRepository implements IExpensesRepository {
     try {
       return await this.repository.find({ where: { userId } })
     } catch (error) {
-      throw new QueryError()
+      throw new QueryError(error)
     }
   }
 
@@ -52,7 +43,7 @@ class ExpensesRepository implements IExpensesRepository {
     try {
       return await this.repository.findOne(id)
     } catch (error) {
-      throw new QueryError()
+      throw new QueryError(error)
     }
   }
 }

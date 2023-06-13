@@ -17,7 +17,7 @@ class ExpenseTypesRepository implements IExpenseTypesRepository {
       const expenseType = this.repository.create(data)
       await this.repository.save(expenseType)
     } catch (error) {
-      throw new QueryError()
+      throw new QueryError(error)
     }
   }
 
@@ -25,7 +25,7 @@ class ExpenseTypesRepository implements IExpenseTypesRepository {
     try {
       await this.repository.update(id, data)
     } catch (error) {
-      throw new QueryError()
+      throw new QueryError(error)
     }
   }
 
@@ -33,7 +33,7 @@ class ExpenseTypesRepository implements IExpenseTypesRepository {
     try {
       await this.repository.delete(id)
     } catch (error) {
-      throw new QueryError()
+      throw new QueryError(error)
     }
   }
 
@@ -41,7 +41,7 @@ class ExpenseTypesRepository implements IExpenseTypesRepository {
     try {
       return await this.repository.find()
     } catch (error) {
-      throw new QueryError()
+      throw new QueryError(error)
     }
   }
 
@@ -49,7 +49,7 @@ class ExpenseTypesRepository implements IExpenseTypesRepository {
     try {
       return await this.repository.findOne(id)
     } catch (error) {
-      throw new QueryError()
+      throw new QueryError(error)
     }
   }
 }

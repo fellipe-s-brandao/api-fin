@@ -1,4 +1,5 @@
 interface ICreateExpensesDTO {
+  id?: string
   name: string
   description: string
   amountSpent: number
