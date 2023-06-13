@@ -2,7 +2,7 @@ import { ExpenseType } from '../infra/typeorm/entities/ExpenseType'
 import { ICreateExpenseTypesDTO } from '../useCases/ExpenseTypes/createExpenseTypes/dto/ICreateExpenseTypesDTO'
 
 interface IExpenseTypesRepository {
-  create(data: ICreateExpenseTypesDTO): Promise<void>
+  create(data: ICreateExpenseTypesDTO): Promise<ExpenseType>
   delete(id: string): Promise<void>
   getAll(): Promise<ExpenseType[]>
   getById(id: string): Promise<ExpenseType>

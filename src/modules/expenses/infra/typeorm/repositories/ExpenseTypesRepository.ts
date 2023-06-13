@@ -11,10 +11,13 @@ class ExpenseTypesRepository implements IExpenseTypesRepository {
     this.repository = getRepository(ExpenseType)
   }
 
-  async create(data: ICreateExpensesDTO): Promise<void> {
+  async create(data: ICreateExpensesDTO): Promise<ExpenseType> {
     try {
       const expenseType = this.repository.create(data)
+
       await this.repository.save(expenseType)
+
+      return expenseType
     } catch (error) {
       throw new QueryError(error)
     }

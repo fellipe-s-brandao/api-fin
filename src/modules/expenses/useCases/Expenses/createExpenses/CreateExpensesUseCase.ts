@@ -2,15 +2,7 @@ import { Expense } from '@modules/expenses/infra/typeorm/entities/Expense'
 import { IExpensesRepository } from '@modules/expenses/repositories/IExpensesRepository'
 import { AppError } from '@shared/errors/AppError'
 import { inject, injectable } from 'tsyringe'
-
-interface IRequest {
-  name: string
-  description: string
-  amountSpent: number
-  expenseTypeId: string
-  expenseDate: Date
-  userId: string
-}
+import { ICreateExpensesDTO } from './dto/ICreateExpensesDTO'
 
 @injectable()
 class CreateExpensesUseCase {
@@ -19,7 +11,7 @@ class CreateExpensesUseCase {
     private expensesRepository: IExpensesRepository,
   ) {}
 
-  async execute(data: IRequest): Promise<Expense> {
+  async execute(data: ICreateExpensesDTO): Promise<Expense> {
     if (!data.name) {
       throw new AppError('Name is empty')
     }
