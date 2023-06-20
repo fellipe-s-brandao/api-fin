@@ -6,6 +6,7 @@ interface IExpensesRepository {
   delete(id: string): Promise<void>
   getAllByUserId(userId: string): Promise<Expense[]>
   getById(id: string): Promise<Expense>
+  getByExpenseTypeId(expenseTypeId: string): Promise<Expense[]>
 }
 
 export { IExpensesRepository }

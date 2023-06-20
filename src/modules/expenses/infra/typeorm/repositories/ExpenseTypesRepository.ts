@@ -46,6 +46,14 @@ class ExpenseTypesRepository implements IExpenseTypesRepository {
       throw new QueryError(error)
     }
   }
+
+  async getAllByUserId(userId: string): Promise<ExpenseType[]> {
+    try {
+      return await this.repository.find({ where: { userId } })
+    } catch (error) {
+      throw new QueryError(error)
+    }
+  }
 }
 
 export { ExpenseTypesRepository }

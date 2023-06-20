@@ -46,6 +46,14 @@ class ExpensesRepository implements IExpensesRepository {
       throw new QueryError(error)
     }
   }
+
+  async getByExpenseTypeId(expenseTypeId: string): Promise<Expense[]> {
+    try {
+      return await this.repository.find({ where: { expenseTypeId } })
+    } catch (error) {
+      throw new QueryError(error)
+    }
+  }
 }
 
 export { ExpensesRepository }
