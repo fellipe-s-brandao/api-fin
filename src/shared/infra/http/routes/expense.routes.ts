@@ -12,8 +12,11 @@ const updateExpensesController = new UpdateExpensesController()
 const deleteExpensesController = new DeleteExpensesController()
 
 expenseRoutes.post('/', ensureAuthenticated, createExpensesController.handle)
+
 expenseRoutes.get('/', ensureAuthenticated, listExpensesController.handle)
+
 expenseRoutes.put('/:id', ensureAuthenticated, updateExpensesController.handle)
+
 expenseRoutes.delete(
   '/:id',
   ensureAuthenticated,

@@ -22,7 +22,7 @@ class DeleteExpenseTypesUseCase {
 
     const expense = await this.expensesRepository.getByExpenseTypeId(id)
 
-    if (expense) {
+    if (expense.length > 0) {
       throw new AppError(
         'Type of expense linked to an expense, it is not possible to delete',
         400,

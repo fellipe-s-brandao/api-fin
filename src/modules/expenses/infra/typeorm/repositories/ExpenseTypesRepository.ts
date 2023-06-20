@@ -13,9 +13,9 @@ class ExpenseTypesRepository implements IExpenseTypesRepository {
 
   async create(data: ICreateExpensesDTO): Promise<ExpenseType> {
     try {
-      const expenseType = this.repository.create(data)
+      let expenseType = this.repository.create(data)
 
-      await this.repository.save(expenseType)
+      expenseType = await this.repository.save(expenseType)
 
       return expenseType
     } catch (error) {

@@ -10,9 +10,9 @@ class UpdateExpensesController {
     const { id } = request.params
     const { id: userId } = request.user
 
-    const updareExpense = container.resolve(UpdateExpensesUseCase)
+    const updateExpense = container.resolve(UpdateExpensesUseCase)
 
-    const expense = await updareExpense.execute({
+    const expense = await updateExpense.execute({
       id,
       name,
       description,
