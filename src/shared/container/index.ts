@@ -25,7 +25,7 @@ container.registerSingleton<IUserTokensRepository>(
 )
 
 /**
- * Expanses
+ * Expenses
  */
 container.registerSingleton<IExpensesRepository>(
   'ExpensesRepository',

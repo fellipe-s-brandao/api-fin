@@ -9,7 +9,7 @@ import {
 } from 'typeorm'
 import { v4 as uuidV4 } from 'uuid'
 
-@Entity('expansesTypes')
+@Entity('expenseTypes')
 class ExpenseType {
   @PrimaryColumn()
   id: string

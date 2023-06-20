@@ -2,7 +2,7 @@ import { IExpenseTypesRepository } from '@modules/expenses/repositories/IExpense
 import { inject, injectable } from 'tsyringe'
 
 @injectable()
-class DeleteExpanseTypesUseCase {
+class DeleteExpenseTypesUseCase {
   constructor(
     @inject('ExpenseTypesRepository')
     private expenseTypesRepository: IExpenseTypesRepository,
@@ -11,4 +11,4 @@ class DeleteExpanseTypesUseCase {
   async execute(): Promise<void> {}
 }
 
-export { DeleteExpanseTypesUseCase }
+export { DeleteExpenseTypesUseCase }

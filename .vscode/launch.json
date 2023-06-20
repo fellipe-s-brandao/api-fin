@@ -2,17 +2,16 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Attach to Node in Docker",
       "type": "node",
       "request": "attach",
-      "address": "localhost",
+      "name": "Attach to Docker",
       "port": 9229,
       "localRoot": "${workspaceFolder}",
       "remoteRoot": "/app",
       "protocol": "inspector",
-      "sourceMaps": true,
-      "restart": true,
-      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
     }
   ]
 }

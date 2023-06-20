@@ -41,7 +41,7 @@ class ExpenseTypesRepository implements IExpenseTypesRepository {
 
   async getById(id: string): Promise<ExpenseType> {
     try {
-      return await this.repository.findOne(id)
+      return await this.repository.findOne({ where: { id } })
     } catch (error) {
       throw new QueryError(error)
     }

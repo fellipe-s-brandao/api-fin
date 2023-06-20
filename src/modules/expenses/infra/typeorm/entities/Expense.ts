@@ -10,7 +10,7 @@ import {
 import { v4 as uuidV4 } from 'uuid'
 import { ExpenseType } from './ExpenseType'
 
-@Entity('expanses')
+@Entity('expenses')
 class Expense {
   @PrimaryColumn()
   id: string
@@ -29,7 +29,7 @@ class Expense {
 
   @ManyToOne(() => ExpenseType)
   @JoinColumn({ name: 'expenseTypeId' })
-  expanseTypes: ExpenseType
+  expenseTypes: ExpenseType
 
   @Column()
   userId: string

@@ -3,12 +3,16 @@ import { IExpensesRepository } from '@modules/expenses/repositories/IExpensesRep
 import { AppError } from '@shared/errors/AppError'
 import { inject, injectable } from 'tsyringe'
 import { ICreateExpensesDTO } from './dto/ICreateExpensesDTO'
+import { IExpenseTypesRepository } from '@modules/expenses/repositories/IExpenseTypesRepository'
 
 @injectable()
 class CreateExpensesUseCase {
   constructor(
     @inject('ExpensesRepository')
     private expensesRepository: IExpensesRepository,
+
+    @inject('ExpenseTypesRepository')
+    private expenseTypeRepository: IExpenseTypesRepository,
   ) {}
 
   async execute(data: ICreateExpensesDTO): Promise<Expense> {
@@ -30,6 +34,14 @@ class CreateExpensesUseCase {
 
     if (!data.expenseTypeId) {
       throw new AppError('Expense date is empty')
+    }
+
+    const expenseType = await this.expenseTypeRepository.getById(
+      data.expenseTypeId,
+    )
+
+    if (!expenseType) {
+      throw new AppError('Expense type not found', 401)
     }
 
     const expense = this.expensesRepository.create(data)

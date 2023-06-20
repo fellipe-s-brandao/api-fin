@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm'
 
-export class expanseTypess1686235515880 implements MigrationInterface {
+export class expenses1686235791596 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'expanseTypes',
+        name: 'expenses',
         columns: [
           {
             name: 'id',
@@ -20,6 +20,18 @@ export class expanseTypess1686235515880 implements MigrationInterface {
             type: 'text',
           },
           {
+            name: 'amountSpent',
+            type: 'numeric',
+          },
+          {
+            name: 'expenseTypeId',
+            type: 'uuid',
+          },
+          {
+            name: 'expenseDate',
+            type: 'timestamp',
+          },
+          {
             name: 'userId',
             type: 'uuid',
           },
@@ -32,11 +44,19 @@ export class expanseTypess1686235515880 implements MigrationInterface {
 
         foreignKeys: [
           {
-            name: 'FKUserExpanseType',
+            name: 'FKUserExpense',
             referencedTableName: 'users',
             referencedColumnNames: ['id'],
             columnNames: ['userId'],
             onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
+          },
+          {
+            name: 'FKExpenseTypes',
+            referencedTableName: 'expenseTypes',
+            referencedColumnNames: ['id'],
+            columnNames: ['expenseTypeId'],
+            onDelete: 'NO ACTION',
             onUpdate: 'CASCADE',
           },
         ],
@@ -45,6 +65,6 @@ export class expanseTypess1686235515880 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('expanseTypes')
+    await queryRunner.dropTable('expenses')
   }
 }
