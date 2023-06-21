@@ -1,17 +1,17 @@
 import { QueryError } from '@shared/errors/QueryError'
 import { Repository, getRepository } from 'typeorm'
-import { Profit } from '../entities/Profits'
-import { ICreateProfitsDTO } from '@modules/profits/useCases/Profits/createProfits/dto/ICreateProfitsDTO'
-import { IProfitRepository } from '@modules/profits/repositories/IProfitRepository'
+import { ProfitTypes } from '../entities/ProfitTypes'
+import { ICreateProfitTypesDTO } from '@modules/profits/useCases/ProfitTypes/createProfitTypes/dto/ICreateProfitTypesDTO'
+import { IProfitTypesRepository } from '@modules/profits/repositories/IProfitTypesRepository'
 
-class ProfitsRepository implements IProfitRepository {
-  private repository: Repository<Profit>
+class ProfitTypesRepository implements IProfitTypesRepository {
+  private repository: Repository<ProfitTypes>
 
   constructor() {
-    this.repository = getRepository(Profit)
+    this.repository = getRepository(ProfitTypes)
   }
 
-  async create(data: ICreateProfitsDTO): Promise<Profit> {
+  async create(data: ICreateProfitTypesDTO): Promise<ProfitTypes> {
     try {
       let profitType = this.repository.create(data)
 
@@ -31,7 +31,7 @@ class ProfitsRepository implements IProfitRepository {
     }
   }
 
-  async getAllByUserId(userId: string): Promise<Profit[]> {
+  async getAllByUserId(userId: string): Promise<ProfitTypes[]> {
     try {
       return await this.repository.find({ where: { userId } })
     } catch (error) {
@@ -39,7 +39,7 @@ class ProfitsRepository implements IProfitRepository {
     }
   }
 
-  async getById(id: string): Promise<Profit> {
+  async getById(id: string): Promise<ProfitTypes> {
     try {
       return await this.repository.findOne({ where: { id } })
     } catch (error) {
@@ -48,4 +48,4 @@ class ProfitsRepository implements IProfitRepository {
   }
 }
 
-export { ProfitsRepository }
+export { ProfitTypesRepository }

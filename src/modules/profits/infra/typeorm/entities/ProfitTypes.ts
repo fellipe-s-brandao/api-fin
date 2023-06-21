@@ -8,8 +8,8 @@ import {
 import { v4 as uuidV4 } from 'uuid'
 import { User } from '@modules/accounts/infra/typeorm/entities/User'
 
-@Entity()
-export class ProfitTypes {
+@Entity('profitTypes')
+class ProfitTypes {
   @PrimaryColumn('uuid')
   id: string
 
@@ -31,3 +31,5 @@ export class ProfitTypes {
     }
   }
 }
+
+export { ProfitTypes }

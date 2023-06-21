@@ -9,8 +9,8 @@ import { v4 as uuidV4 } from 'uuid'
 import { User } from '@modules/accounts/infra/typeorm/entities/User'
 import { ProfitTypes } from './ProfitTypes'
 
-@Entity()
-export class Profit {
+@Entity('profits')
+class Profit {
   @PrimaryColumn('uuid')
   id: string
 
@@ -41,3 +41,5 @@ export class Profit {
     }
   }
 }
+
+export { Profit }

@@ -3,7 +3,7 @@ import { IExpenseTypesRepository } from '@modules/expenses/repositories/IExpense
 import { inject, injectable } from 'tsyringe'
 
 @injectable()
-class ListExpenseTypesUseCase {
+class ListProfitsUseCase {
   constructor(
     @inject('ExpenseTypesRepository')
     private expenseTypesRepository: IExpenseTypesRepository,
@@ -14,4 +14,4 @@ class ListExpenseTypesUseCase {
   }
 }
 
-export { ListExpenseTypesUseCase }
+export { ListProfitsUseCase }
