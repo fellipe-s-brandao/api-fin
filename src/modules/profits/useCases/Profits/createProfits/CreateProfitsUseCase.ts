@@ -1,17 +1,17 @@
-import { IExpenseTypesRepository } from '@modules/expenses/repositories/IExpenseTypesRepository'
 import { AppError } from '@shared/errors/AppError'
 import { inject, injectable } from 'tsyringe'
-import { ICreateExpenseTypesDTO } from './dto/ICreateExpenseTypesDTO'
-import { ExpenseType } from '@modules/expenses/infra/typeorm/entities/ExpenseType'
+import { ICreateProfitsDTO } from './dto/ICreateProfitsDTO'
+import { IProfitRepository } from '@modules/profits/repositories/IProfitRepository'
+import { Profit } from '@modules/profits/infra/typeorm/entities/Profits'
 
 @injectable()
 class CreateProfitsUseCase {
   constructor(
-    @inject('ExpenseTypesRepository')
-    private expenseTypesRepository: IExpenseTypesRepository,
+    @inject('ProfitsRepository')
+    private profitsRepository: IProfitRepository,
   ) {}
 
-  async execute(data: ICreateExpenseTypesDTO): Promise<ExpenseType> {
+  async execute(data: ICreateProfitsDTO): Promise<Profit> {
     if (!data.name) {
       throw new AppError('Name is empty')
     }
@@ -20,13 +20,25 @@ class CreateProfitsUseCase {
       throw new AppError('Description is empty')
     }
 
-    const expenseType = this.expenseTypesRepository.create(data)
-
-    if (!expenseType) {
-      throw new AppError('Error creating expense type', 500)
+    if (typeof data.profitAmount !== 'number') {
+      throw new AppError('Profit amount is invalid')
     }
 
-    return expenseType
+    if (!data.profitTypeId) {
+      throw new AppError('Profit type ID is empty')
+    }
+
+    if (!(data.profitDate instanceof Date)) {
+      throw new AppError('Profit date is invalid')
+    }
+
+    const profit = this.profitsRepository.create(data)
+
+    if (!profit) {
+      throw new AppError('Error creating profit', 500)
+    }
+
+    return profit
   }
 }
 
