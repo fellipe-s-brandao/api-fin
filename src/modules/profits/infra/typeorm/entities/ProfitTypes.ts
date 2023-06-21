@@ -1,15 +1,16 @@
-import { User } from '@modules/accounts/infra/typeorm/entities/User'
 import {
   Entity,
-  PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
   ManyToOne,
+  PrimaryColumn,
 } from 'typeorm'
+import { v4 as uuidV4 } from 'uuid'
+import { User } from '@modules/accounts/infra/typeorm/entities/User'
 
 @Entity()
 export class ProfitTypes {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryColumn('uuid')
   id: string
 
   @Column()
@@ -23,4 +24,10 @@ export class ProfitTypes {
 
   @CreateDateColumn()
   createdAt: Date
+
+  constructor() {
+    if (!this.id) {
+      this.id = uuidV4()
+    }
+  }
 }
