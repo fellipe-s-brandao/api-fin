@@ -16,15 +16,15 @@
 
 ### Lucro
 - [x] Salvar o Lucro
-- [] Listar o Lucro
-- [ ] Editar o Lucro
-- [ ] Excluir o Lucro
+- [x] Listar o Lucro
+- [x] Editar o Lucro
+- [x] Excluir o Lucro
 
 ### Tipo de Lucro
-- [ ] Salvar o tipo de Lucro
-- [ ] Listar o tipo de Lucro
-- [ ] Editar o tipo de Lucro
-- [ ] Excluir o tipo de Lucro
+- [x] Salvar o tipo de Lucro
+- [x] Listar o tipo de Lucro
+- [x] Editar o tipo de Lucro
+- [x] Excluir o tipo de Lucro
 
 ### Investimentos
 (...)
