@@ -8,9 +8,9 @@ class ListExpenseController {
 
     const listExpense = container.resolve(ListExpenseUseCase)
 
-    const expense = await listExpense.execute(userId)
+    const expenses = await listExpense.execute(userId)
 
-    return response.status(200).json(expense)
+    return response.status(200).json(expenses)
   }
 }
 

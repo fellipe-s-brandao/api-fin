@@ -8,9 +8,9 @@ class DeleteExpenseController {
 
     const deleteExpenseUseCase = container.resolve(DeleteExpenseUseCase)
 
-    const expense = await deleteExpenseUseCase.execute(id)
+    await deleteExpenseUseCase.execute(id)
 
-    return response.status(204).json(expense)
+    return response.status(204).json()
   }
 }
 

@@ -13,11 +13,11 @@ class ProfitRepository implements IProfitRepository {
 
   async create(data: ICreateProfitDTO): Promise<Profit> {
     try {
-      let profitType = this.repository.create(data)
+      let profit = this.repository.create(data)
 
-      profitType = await this.repository.save(profitType)
+      profit = await this.repository.save(profit)
 
-      return profitType
+      return profit
     } catch (error) {
       throw new QueryError(error)
     }

@@ -29,7 +29,6 @@ class UpdateExpenseUseCase {
     }
 
     expense = Object.assign(expense, data)
-    console.log(expense)
 
     return await this.expensesRepository.create(expense)
   }

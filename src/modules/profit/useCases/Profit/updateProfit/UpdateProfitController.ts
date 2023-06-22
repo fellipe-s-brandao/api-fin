@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { container } from 'tsyringe'
-import { UpdateExpenseTypeUseCase } from './UpdateExpenseTypeUseCase'
+import { UpdateProfitUseCase } from './UpdateProfitUseCase'
 
 class UpdateProfitController {
   async handle(request: Request, response: Response) {
@@ -9,9 +9,9 @@ class UpdateProfitController {
     const { id } = request.params
     const { id: userId } = request.user
 
-    const updateExpenseType = container.resolve(UpdateExpenseTypeUseCase)
+    const updateProfitUseCase = container.resolve(UpdateProfitUseCase)
 
-    const expense = await updateExpenseType.execute({
+    const expense = await updateProfitUseCase.execute({
       id,
       name,
       description,

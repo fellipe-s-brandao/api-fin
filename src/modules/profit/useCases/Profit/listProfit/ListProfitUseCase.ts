@@ -1,16 +1,16 @@
-import { ExpenseType } from '@modules/expense/infra/typeorm/entities/ExpenseType'
-import { IExpenseTypeRepository } from '@modules/expense/repositories/IExpenseTypeRepository'
+import { Profit } from '@modules/profit/infra/typeorm/entities/Profit'
+import { IProfitRepository } from '@modules/profit/repositories/IProfitRepository'
 import { inject, injectable } from 'tsyringe'
 
 @injectable()
 class ListProfitUseCase {
   constructor(
-    @inject('ExpenseTypeRepository')
-    private expenseTypeRepository: IExpenseTypeRepository,
-  ) { }
+    @inject('ProfitRepository')
+    private profitRepository: IProfitRepository,
+  ) {}
 
-  async execute(userId: string): Promise<ExpenseType[]> {
-    return await this.expenseTypeRepository.getAllByUserId(userId)
+  async execute(userId: string): Promise<Profit[]> {
+    return await this.profitRepository.getAllByUserId(userId)
   }
 }
 

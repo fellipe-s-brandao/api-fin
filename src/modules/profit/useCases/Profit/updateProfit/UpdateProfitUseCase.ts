@@ -1,30 +1,36 @@
-import { IExpenseTypeRepository } from '@modules/expense/repositories/IExpenseTypeRepository'
 import { inject, injectable } from 'tsyringe'
-import { ICreateExpenseTypeDTO } from '../createExpenseType/dto/ICreateExpenseTypeDTO'
-import { ExpenseType } from '@modules/expense/infra/typeorm/entities/ExpenseType'
 import { AppError } from '@shared/errors/AppError'
+import { IProfitRepository } from '@modules/profit/repositories/IProfitRepository'
+import { ICreateProfitDTO } from '../createProfit/dto/ICreateProfitDTO'
+import { Profit } from '@modules/profit/infra/typeorm/entities/Profit'
 
 @injectable()
 class UpdateProfitUseCase {
   constructor(
-    @inject('ExpenseTypeRepository')
-    private expenseTypeRepository: IExpenseTypeRepository,
-  ) { }
+    @inject('ProfitRepository')
+    private profitRepository: IProfitRepository,
+  ) {}
 
-  async execute(data: ICreateExpenseTypeDTO): Promise<ExpenseType> {
-    if (!data.name && !data.description) {
+  async execute(data: ICreateProfitDTO): Promise<Profit> {
+    if (
+      !data.name &&
+      !data.description &&
+      !data.profitAmount &&
+      !data.profitTypeId &&
+      !data.profitDate
+    ) {
       throw new AppError('No item was provided')
     }
 
-    let expenseType = await this.expenseTypeRepository.getById(data.id)
+    let profit = await this.profitRepository.getById(data.id)
 
-    if (!expenseType) {
-      throw new AppError('Expense not found', 404)
+    if (!profit) {
+      throw new AppError('Profit not found', 404)
     }
 
-    expenseType = Object.assign(expenseType, data)
+    profit = Object.assign(profit, data)
 
-    return await this.expenseTypeRepository.create(expenseType)
+    return await this.profitRepository.create(profit)
   }
 }
 
