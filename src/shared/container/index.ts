@@ -11,10 +11,10 @@ import { IExpenseRepository } from '@modules/expense/repositories/IExpenseReposi
 import { ExpenseRepository } from '@modules/expense/infra/typeorm/repositories/ExpenseRepository'
 import { IExpenseTypeRepository } from '@modules/expense/repositories/IExpenseTypeRepository'
 import { ExpenseTypeRepository } from '@modules/expense/infra/typeorm/repositories/ExpenseTypeRepository'
-import { IProfitRepository } from '@modules/profits/repositories/IProfitRepository'
-import { ProfitsRepository } from '@modules/profits/infra/typeorm/repositories/ProfitsRepository'
-import { IProfitTypesRepository } from '@modules/profits/repositories/IProfitTypesRepository'
-import { ProfitTypesRepository } from '@modules/profits/infra/typeorm/repositories/ProfitTypesRepository'
+import { IProfitRepository } from '@modules/profit/repositories/IProfitRepository'
+import { ProfitRepository } from '@modules/profit/infra/typeorm/repositories/ProfitRepository'
+import { IProfitTypeRepository } from '@modules/profit/repositories/IProfitTypeRepository'
+import { ProfitTypeRepository } from '@modules/profit/infra/typeorm/repositories/ProfitTypeRepository'
 
 /**
  * Account
@@ -38,13 +38,13 @@ container.registerSingleton<IExpenseTypeRepository>(
 )
 
 /**
- * Profits
+ * Profit
  */
 container.registerSingleton<IProfitRepository>(
-  'ProfitsRepository',
-  ProfitsRepository,
+  'ProfitRepository',
+  ProfitRepository,
 )
-container.registerSingleton<IProfitTypesRepository>(
-  'ProfitTypesRepository',
-  ProfitTypesRepository,
+container.registerSingleton<IProfitTypeRepository>(
+  'ProfitTypeRepository',
+  ProfitTypeRepository,
 )
