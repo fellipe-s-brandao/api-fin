@@ -9,7 +9,7 @@ class CreateExpenseTypeUseCase {
   constructor(
     @inject('ExpenseTypeRepository')
     private expenseTypeRepository: IExpenseTypeRepository,
-  ) { }
+  ) {}
 
   async execute(data: ICreateExpenseTypeDTO): Promise<ExpenseType> {
     if (!data.name) {

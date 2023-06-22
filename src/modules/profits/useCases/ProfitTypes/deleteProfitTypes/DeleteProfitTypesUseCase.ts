@@ -1,20 +1,20 @@
-import { IExpenseTypesRepository } from '@modules/expenses/repositories/IExpenseTypesRepository'
-import { IExpensesRepository } from '@modules/expenses/repositories/IExpensesRepository'
+import { IExpenseTypeRepository } from '@modules/expense/repositories/IExpenseTypeRepository'
+import { IExpenseRepository } from '@modules/expense/repositories/IExpenseRepository'
 import { AppError } from '@shared/errors/AppError'
 import { inject, injectable } from 'tsyringe'
 
 @injectable()
-class DeleteExpenseTypesUseCase {
+class DeleteExpenseTypeUseCase {
   constructor(
-    @inject('ExpenseTypesRepository')
-    private expenseTypesRepository: IExpenseTypesRepository,
+    @inject('ExpenseTypeRepository')
+    private expenseTypeRepository: IExpenseTypeRepository,
 
-    @inject('ExpensesRepository')
-    private expensesRepository: IExpensesRepository,
-  ) {}
+    @inject('ExpenseRepository')
+    private expensesRepository: IExpenseRepository,
+  ) { }
 
   async execute(id: string): Promise<void> {
-    const expenseType = await this.expenseTypesRepository.getById(id)
+    const expenseType = await this.expenseTypeRepository.getById(id)
 
     if (!expenseType) {
       throw new AppError('Expense Type not found', 404)
@@ -29,8 +29,8 @@ class DeleteExpenseTypesUseCase {
       )
     }
 
-    await this.expenseTypesRepository.delete(id)
+    await this.expenseTypeRepository.delete(id)
   }
 }
 
-export { DeleteExpenseTypesUseCase }
+export { DeleteExpenseTypeUseCase }

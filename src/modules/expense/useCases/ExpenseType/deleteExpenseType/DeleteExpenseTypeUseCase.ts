@@ -4,14 +4,14 @@ import { AppError } from '@shared/errors/AppError'
 import { inject, injectable } from 'tsyringe'
 
 @injectable()
-class DeleteProfitsUseCase {
+class DeleteExpenseTypeUseCase {
   constructor(
     @inject('ExpenseTypeRepository')
     private expenseTypeRepository: IExpenseTypeRepository,
 
     @inject('ExpenseRepository')
     private expensesRepository: IExpenseRepository,
-  ) { }
+  ) {}
 
   async execute(id: string): Promise<void> {
     const expenseType = await this.expenseTypeRepository.getById(id)
@@ -33,4 +33,4 @@ class DeleteProfitsUseCase {
   }
 }
 
-export { DeleteProfitsUseCase }
+export { DeleteExpenseTypeUseCase }

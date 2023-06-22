@@ -4,7 +4,7 @@ export class expenses1686235791596 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'expenses',
+        name: 'expense',
         columns: [
           {
             name: 'id',
@@ -52,8 +52,8 @@ export class expenses1686235791596 implements MigrationInterface {
             onUpdate: 'CASCADE',
           },
           {
-            name: 'FKExpenseTypes',
-            referencedTableName: 'expenseTypes',
+            name: 'FKExpenseType',
+            referencedTableName: 'expenseType',
             referencedColumnNames: ['id'],
             columnNames: ['expenseTypeId'],
             onDelete: 'NO ACTION',
@@ -65,6 +65,6 @@ export class expenses1686235791596 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('expenses')
+    await queryRunner.dropTable('expense')
   }
 }

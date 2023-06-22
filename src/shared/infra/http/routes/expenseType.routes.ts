@@ -1,38 +1,38 @@
 import { Router } from 'express'
 import { ensureAuthenticated } from '../middlewares/ensureAuthenticated'
-import { CreateExpenseTypesController } from '@modules/expenses/useCases/ExpenseTypes/createExpenseTypes/CreateExpenseTypesController'
-import { ListExpenseTypesController } from '@modules/expenses/useCases/ExpenseTypes/listExpenseTypes/ListExpenseTypesController'
-import { DeleteExpenseTypesController } from '@modules/expenses/useCases/ExpenseTypes/deleteExpenseTypes/DeleteExpenseTypesController'
-import { UpdateExpenseTypesController } from '@modules/expenses/useCases/ExpenseTypes/updateExpenseTypes/UpdateExpenseTypesController'
+import { CreateExpenseTypeController } from '@modules/expense/useCases/ExpenseType/createExpenseType/CreateExpenseTypeController'
+import { ListExpenseTypeController } from '@modules/expense/useCases/ExpenseType/listExpenseType/ListExpenseTypeController'
+import { DeleteExpenseTypeController } from '@modules/expense/useCases/ExpenseType/deleteExpenseType/DeleteExpenseTypeController'
+import { UpdateExpenseTypeController } from '@modules/expense/useCases/ExpenseType/updateExpenseType/UpdateExpenseTypeController'
 
 const expenseTypeRoutes = Router()
-const createExpenseTypesController = new CreateExpenseTypesController()
-const listExpenseTypesController = new ListExpenseTypesController()
-const updateExpenseTypesController = new UpdateExpenseTypesController()
-const deleteExpenseTypesController = new DeleteExpenseTypesController()
+const createExpenseTypeController = new CreateExpenseTypeController()
+const listExpenseTypeController = new ListExpenseTypeController()
+const updateExpenseTypeController = new UpdateExpenseTypeController()
+const deleteExpenseTypeController = new DeleteExpenseTypeController()
 
 expenseTypeRoutes.post(
   '/',
   ensureAuthenticated,
-  createExpenseTypesController.handle,
+  createExpenseTypeController.handle,
 )
 
 expenseTypeRoutes.get(
   '/',
   ensureAuthenticated,
-  listExpenseTypesController.handle,
+  listExpenseTypeController.handle,
 )
 
 expenseTypeRoutes.put(
   '/:id',
   ensureAuthenticated,
-  updateExpenseTypesController.handle,
+  updateExpenseTypeController.handle,
 )
 
 expenseTypeRoutes.delete(
   '/:id',
   ensureAuthenticated,
-  deleteExpenseTypesController.handle,
+  deleteExpenseTypeController.handle,
 )
 
 export { expenseTypeRoutes }

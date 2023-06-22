@@ -1,26 +1,26 @@
-import { CreateExpensesController } from '@modules/expenses/useCases/Expenses/createExpenses/CreateExpensesController'
+import { CreateExpenseController } from '@modules/expense/useCases/Expense/createExpense/CreateExpenseController'
 import { Router } from 'express'
 import { ensureAuthenticated } from '../middlewares/ensureAuthenticated'
-import { ListExpensesController } from '@modules/expenses/useCases/Expenses/listExpenses/ListExpensesController'
-import { UpdateExpensesController } from '@modules/expenses/useCases/Expenses/updateExpenses/UpdateExpensesController'
-import { DeleteExpensesController } from '@modules/expenses/useCases/Expenses/deleteExpenses/DeleteExpensesController'
+import { ListExpenseController } from '@modules/expense/useCases/Expense/listExpense/ListExpenseController'
+import { UpdateExpenseController } from '@modules/expense/useCases/Expense/updateExpense/UpdateExpenseController'
+import { DeleteExpenseController } from '@modules/expense/useCases/Expense/deleteExpense/DeleteExpenseController'
 
 const expenseRoutes = Router()
-const createExpensesController = new CreateExpensesController()
-const listExpensesController = new ListExpensesController()
-const updateExpensesController = new UpdateExpensesController()
-const deleteExpensesController = new DeleteExpensesController()
+const createExpenseController = new CreateExpenseController()
+const listExpenseController = new ListExpenseController()
+const updateExpenseController = new UpdateExpenseController()
+const deleteExpenseController = new DeleteExpenseController()
 
-expenseRoutes.post('/', ensureAuthenticated, createExpensesController.handle)
+expenseRoutes.post('/', ensureAuthenticated, createExpenseController.handle)
 
-expenseRoutes.get('/', ensureAuthenticated, listExpensesController.handle)
+expenseRoutes.get('/', ensureAuthenticated, listExpenseController.handle)
 
-expenseRoutes.put('/:id', ensureAuthenticated, updateExpensesController.handle)
+expenseRoutes.put('/:id', ensureAuthenticated, updateExpenseController.handle)
 
 expenseRoutes.delete(
   '/:id',
   ensureAuthenticated,
-  deleteExpensesController.handle,
+  deleteExpenseController.handle,
 )
 
 export { expenseRoutes }

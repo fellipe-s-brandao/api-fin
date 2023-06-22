@@ -3,15 +3,15 @@ import { IExpenseTypeRepository } from '@modules/expense/repositories/IExpenseTy
 import { inject, injectable } from 'tsyringe'
 
 @injectable()
-class ListProfitsUseCase {
+class ListExpenseTypeUseCase {
   constructor(
     @inject('ExpenseTypeRepository')
     private expenseTypeRepository: IExpenseTypeRepository,
-  ) { }
+  ) {}
 
   async execute(userId: string): Promise<ExpenseType[]> {
     return await this.expenseTypeRepository.getAllByUserId(userId)
   }
 }
 
-export { ListProfitsUseCase }
+export { ListExpenseTypeUseCase }

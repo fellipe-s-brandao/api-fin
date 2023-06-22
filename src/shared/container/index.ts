@@ -7,10 +7,10 @@ import { UsersRepository } from '@modules/accounts/infra/typeorm/repositories/Us
 
 import { IUserTokensRepository } from '@modules/accounts/repositories/IUserTokensRepository'
 import { UserTokensRepository } from '@modules/accounts/infra/typeorm/repositories/UserTokensRepository'
-import { IExpensesRepository } from '@modules/expenses/repositories/IExpensesRepository'
-import { ExpensesRepository } from '@modules/expenses/infra/typeorm/repositories/ExpensesRepository'
-import { IExpenseTypesRepository } from '@modules/expenses/repositories/IExpenseTypesRepository'
-import { ExpenseTypesRepository } from '@modules/expenses/infra/typeorm/repositories/ExpenseTypesRepository'
+import { IExpenseRepository } from '@modules/expense/repositories/IExpenseRepository'
+import { ExpenseRepository } from '@modules/expense/infra/typeorm/repositories/ExpenseRepository'
+import { IExpenseTypeRepository } from '@modules/expense/repositories/IExpenseTypeRepository'
+import { ExpenseTypeRepository } from '@modules/expense/infra/typeorm/repositories/ExpenseTypeRepository'
 import { IProfitRepository } from '@modules/profits/repositories/IProfitRepository'
 import { ProfitsRepository } from '@modules/profits/infra/typeorm/repositories/ProfitsRepository'
 import { IProfitTypesRepository } from '@modules/profits/repositories/IProfitTypesRepository'
@@ -29,15 +29,15 @@ container.registerSingleton<IUserTokensRepository>(
 )
 
 /**
- * Expenses
+ * Expense
  */
-container.registerSingleton<IExpensesRepository>(
-  'ExpensesRepository',
-  ExpensesRepository,
+container.registerSingleton<IExpenseRepository>(
+  'ExpenseRepository',
+  ExpenseRepository,
 )
-container.registerSingleton<IExpenseTypesRepository>(
-  'ExpenseTypesRepository',
-  ExpenseTypesRepository,
+container.registerSingleton<IExpenseTypeRepository>(
+  'ExpenseTypeRepository',
+  ExpenseTypeRepository,
 )
 
 /**

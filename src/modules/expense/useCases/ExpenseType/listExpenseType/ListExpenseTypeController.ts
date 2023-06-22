@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import { container } from 'tsyringe'
 import { ListExpenseTypeUseCase } from './ListExpenseTypeUseCase'
 
-class ListProfitsController {
+class ListExpenseTypeController {
   async handle(request: Request, response: Response) {
     const { id: userId } = request.user
 
@@ -14,4 +14,4 @@ class ListProfitsController {
   }
 }
 
-export { ListProfitsController }
+export { ListExpenseTypeController }

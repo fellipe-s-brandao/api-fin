@@ -1,12 +1,12 @@
 import { Request, Response } from 'express'
 import { container } from 'tsyringe'
-import { DeleteExpenseTypeUseCase } from './DeleteExpenseTypeUseCase'
+import { DeleteExpenseUseCase } from './DeleteExpenseUseCase'
 
-class DeleteProfitsController {
+class DeleteExpenseController {
   async handle(request: Request, response: Response) {
     const { id } = request.params
 
-    const deleteExpenseUseCase = container.resolve(DeleteExpenseTypeUseCase)
+    const deleteExpenseUseCase = container.resolve(DeleteExpenseUseCase)
 
     const expense = await deleteExpenseUseCase.execute(id)
 
@@ -14,4 +14,4 @@ class DeleteProfitsController {
   }
 }
 
-export { DeleteProfitsController }
+export { DeleteExpenseController }
