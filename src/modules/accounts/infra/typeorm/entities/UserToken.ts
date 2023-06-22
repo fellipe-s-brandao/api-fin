@@ -9,8 +9,8 @@ import {
 import { User } from './User'
 import { v4 as uuidV4 } from 'uuid'
 
-@Entity('userTokens')
-class UserTokens {
+@Entity('userToken')
+class UserToken {
   @PrimaryColumn()
   id: string
 
@@ -37,4 +37,4 @@ class UserTokens {
   }
 }
 
-export { UserTokens }
+export { UserToken }

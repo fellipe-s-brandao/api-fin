@@ -45,7 +45,7 @@ export class expenses1686235791596 implements MigrationInterface {
         foreignKeys: [
           {
             name: 'FKUserExpense',
-            referencedTableName: 'users',
+            referencedTableName: 'user',
             referencedColumnNames: ['id'],
             columnNames: ['userId'],
             onDelete: 'CASCADE',

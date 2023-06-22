@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm'
 
-export class userTokens1685396507952 implements MigrationInterface {
+export class userToken1685396507952 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'userTokens',
+        name: 'userToken',
         columns: [
           {
             name: 'id',
@@ -33,7 +33,7 @@ export class userTokens1685396507952 implements MigrationInterface {
         foreignKeys: [
           {
             name: 'FKUserToken',
-            referencedTableName: 'users',
+            referencedTableName: 'user',
             referencedColumnNames: ['id'],
             columnNames: ['userId'],
             onDelete: 'CASCADE',
@@ -45,6 +45,6 @@ export class userTokens1685396507952 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('userTokens')
+    await queryRunner.dropTable('userToken')
   }
 }

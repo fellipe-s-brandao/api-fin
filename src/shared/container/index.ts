@@ -2,11 +2,11 @@ import { container } from 'tsyringe'
 
 import '@shared/container/providers'
 
-import { IUsersRepository } from '@modules/accounts/repositories/IUsersRepository'
-import { UsersRepository } from '@modules/accounts/infra/typeorm/repositories/UserRepository'
+import { IUserRepository } from '@modules/accounts/repositories/IUserRepository'
+import { UserRepository } from '@modules/accounts/infra/typeorm/repositories/UserRepository'
 
-import { IUserTokensRepository } from '@modules/accounts/repositories/IUserTokensRepository'
-import { UserTokensRepository } from '@modules/accounts/infra/typeorm/repositories/UserTokensRepository'
+import { IUserTokenRepository } from '@modules/accounts/repositories/IUserTokenRepository'
+import { UserTokenRepository } from '@modules/accounts/infra/typeorm/repositories/UserTokenRepository'
 import { IExpenseRepository } from '@modules/expense/repositories/IExpenseRepository'
 import { ExpenseRepository } from '@modules/expense/infra/typeorm/repositories/ExpenseRepository'
 import { IExpenseTypeRepository } from '@modules/expense/repositories/IExpenseTypeRepository'
@@ -19,13 +19,10 @@ import { ProfitTypesRepository } from '@modules/profits/infra/typeorm/repositori
 /**
  * Account
  */
-container.registerSingleton<IUsersRepository>(
-  'UsersRepository',
-  UsersRepository,
-)
-container.registerSingleton<IUserTokensRepository>(
-  'UsersTokensRepository',
-  UserTokensRepository,
+container.registerSingleton<IUserRepository>('UserRepository', UserRepository)
+container.registerSingleton<IUserTokenRepository>(
+  'UserTokensRepository',
+  UserTokenRepository,
 )
 
 /**

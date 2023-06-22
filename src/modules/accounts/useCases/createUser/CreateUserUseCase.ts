@@ -1,14 +1,14 @@
 import { inject, injectable } from 'tsyringe'
 import { hash } from 'bcrypt'
 import { AppError } from '@shared/errors/AppError'
-import { IUsersRepository } from '@modules/accounts/repositories/IUsersRepository'
+import { IUserRepository } from '@modules/accounts/repositories/IUserRepository'
 import { ICreateUserDTO } from '@modules/accounts/useCases/createUser/dtos/ICreateUserDTO'
 
 @injectable()
 class CreateUserUseCase {
   constructor(
-    @inject('UsersRepository')
-    private userRepository: IUsersRepository,
+    @inject('UserRepository')
+    private userRepository: IUserRepository,
   ) {}
 
   async execute(data: ICreateUserDTO): Promise<void> {

@@ -33,7 +33,7 @@ export class profitTypes1686235906849 implements MigrationInterface {
         foreignKeys: [
           {
             name: 'FKUserProfitType',
-            referencedTableName: 'users',
+            referencedTableName: 'user',
             referencedColumnNames: ['id'],
             columnNames: ['userId'],
             onDelete: 'CASCADE',

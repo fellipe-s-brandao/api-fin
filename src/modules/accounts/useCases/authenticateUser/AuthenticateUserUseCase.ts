@@ -1,9 +1,9 @@
 import { inject, injectable } from 'tsyringe'
 import { AppError } from '@shared/errors/AppError'
-import { IUsersRepository } from '@modules/accounts/repositories/IUsersRepository'
+import { IUserRepository } from '@modules/accounts/repositories/IUserRepository'
 import { compare } from 'bcrypt'
 import { sign } from 'jsonwebtoken'
-import { IUserTokensRepository } from '@modules/accounts/repositories/IUserTokensRepository'
+import { IUserTokenRepository } from '@modules/accounts/repositories/IUserTokenRepository'
 import auth from '@config/auth'
 import { IDateProvider } from '@shared/container/providers/DateProvider/IDateProvider'
 
@@ -24,18 +24,18 @@ interface IResponse {
 @injectable()
 class AuthenticateUserUseCase {
   constructor(
-    @inject('UsersRepository')
-    private usersRepository: IUsersRepository,
+    @inject('UserRepository')
+    private userRepository: IUserRepository,
 
-    @inject('UsersTokensRepository')
-    private usersTokensRepository: IUserTokensRepository,
+    @inject('UserTokensRepository')
+    private userTokenRepository: IUserTokenRepository,
 
     @inject('DayJsDateProvider')
     private dayJsDateProvider: IDateProvider,
   ) {}
 
   async execute({ email, password }: IRequest): Promise<IResponse> {
-    const user = await this.usersRepository.findByEmail(email)
+    const user = await this.userRepository.findByEmail(email)
     const {
       expiresInToken,
       secretRefreshToken,
@@ -68,7 +68,7 @@ class AuthenticateUserUseCase {
       expiresInRefreshTokenDays,
     )
 
-    await this.usersTokensRepository.create({
+    await this.userTokenRepository.create({
       userId: user.id,
       refreshToken,
       expiresDate: refreshTokenExpiresDate,

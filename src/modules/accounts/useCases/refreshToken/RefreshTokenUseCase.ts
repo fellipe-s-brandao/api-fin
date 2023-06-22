@@ -1,5 +1,5 @@
 import auth from '@config/auth'
-import { IUserTokensRepository } from '@modules/accounts/repositories/IUserTokensRepository'
+import { IUserTokenRepository } from '@modules/accounts/repositories/IUserTokenRepository'
 import { IDateProvider } from '@shared/container/providers/DateProvider/IDateProvider'
 import { AppError } from '@shared/errors/AppError'
 import { sign, verify } from 'jsonwebtoken'
@@ -18,8 +18,8 @@ interface ITokenResponse {
 @injectable()
 class RefreshTokenUseCase {
   constructor(
-    @inject('UsersTokensRepository')
-    private usersTokensRepository: IUserTokensRepository,
+    @inject('UserTokensRepository')
+    private userTokenRepository: IUserTokenRepository,
 
     @inject('DayJsDateProvider')
     private dayJsDateProvider: IDateProvider,
@@ -34,7 +34,7 @@ class RefreshTokenUseCase {
     const userId = sub
 
     const userToken =
-      await this.usersTokensRepository.findByUserIdAndRefreshToken(
+      await this.userTokenRepository.findByUserIdAndRefreshToken(
         userId,
         refreshToken,
       )
@@ -43,7 +43,7 @@ class RefreshTokenUseCase {
       throw new AppError('Refresh Token does not exists!')
     }
 
-    await this.usersTokensRepository.deleteById(userToken.id)
+    await this.userTokenRepository.deleteById(userToken.id)
 
     const newRefreshToken = sign({ email }, auth.secretRefreshToken, {
       subject: sub,
@@ -54,7 +54,7 @@ class RefreshTokenUseCase {
       auth.expiresInRefreshTokenDays,
     )
 
-    await this.usersTokensRepository.create({
+    await this.userTokenRepository.create({
       userId: sub,
       refreshToken,
       expiresDate: refreshTokenExpiresDate,
