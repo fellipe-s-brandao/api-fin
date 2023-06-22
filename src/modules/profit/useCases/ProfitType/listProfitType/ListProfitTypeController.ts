@@ -1,16 +1,16 @@
 import { Request, Response } from 'express'
 import { container } from 'tsyringe'
-import { ListExpenseTypeUseCase } from './ListExpenseTypeUseCase'
+import { ListProfitTypeUseCase } from './ListProfitTypeUseCase'
 
 class ListProfitTypeController {
   async handle(request: Request, response: Response) {
     const { id: userId } = request.user
 
-    const listExpense = container.resolve(ListExpenseTypeUseCase)
+    const listProfitTypeUseCase = container.resolve(ListProfitTypeUseCase)
 
-    const expense = await listExpense.execute(userId)
+    const profitType = await listProfitTypeUseCase.execute(userId)
 
-    return response.status(200).json(expense)
+    return response.status(200).json(profitType)
   }
 }
 

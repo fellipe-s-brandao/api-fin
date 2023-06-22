@@ -2,22 +2,22 @@ import { Request, Response } from 'express'
 import { container } from 'tsyringe'
 import { CreateProfitTypeUseCase } from './CreateProfitTypeUseCase'
 
-class CreateExpenseTypeController {
+class CreateProfitTypeController {
   async handle(request: Request, response: Response) {
     const { name, description } = request.body
 
     const { id: userId } = request.user
 
-    const createExpenseType = container.resolve(CreateProfitTypeUseCase)
+    const createProfitTypeUseCase = container.resolve(CreateProfitTypeUseCase)
 
-    const expense = await createExpenseType.execute({
+    const profitType = await createProfitTypeUseCase.execute({
       name,
       description,
       userId,
     })
 
-    return response.status(201).json(expense)
+    return response.status(201).json(profitType)
   }
 }
 
-export { CreateExpenseTypeController }
+export { CreateProfitTypeController }

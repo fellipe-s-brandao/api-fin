@@ -6,6 +6,7 @@ interface IProfitRepository {
   delete(id: string): Promise<void>
   getById(id: string): Promise<Profit>
   getAllByUserId(userId: string): Promise<Profit[]>
+  getAllByProfitTypeId(profitTypeId: string): Promise<Profit[]>
 }
 
 export { IProfitRepository }

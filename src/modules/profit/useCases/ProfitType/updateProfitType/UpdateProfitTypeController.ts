@@ -1,25 +1,25 @@
 import { Request, Response } from 'express'
 import { container } from 'tsyringe'
-import { UpdateExpenseTypeUseCase } from './UpdateExpenseTypeUseCase'
+import { UpdateProfitTypeUseCase } from './UpdateProfitTypeUseCase'
 
-class UpdateExpenseTypeController {
+class UpdateProfitTypeController {
   async handle(request: Request, response: Response) {
     const { name, description } = request.body
 
     const { id } = request.params
     const { id: userId } = request.user
 
-    const updateExpenseType = container.resolve(UpdateExpenseTypeUseCase)
+    const updateProfitTypeUseCase = container.resolve(UpdateProfitTypeUseCase)
 
-    const expense = await updateExpenseType.execute({
+    const profitType = await updateProfitTypeUseCase.execute({
       id,
       name,
       description,
       userId,
     })
 
-    return response.status(200).json(expense)
+    return response.status(200).json(profitType)
   }
 }
 
-export { UpdateExpenseTypeController }
+export { UpdateProfitTypeController }

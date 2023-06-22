@@ -6,9 +6,9 @@ class ListProfitController {
   async handle(request: Request, response: Response) {
     const { id: userId } = request.user
 
-    const listProfit = container.resolve(ListProfitUseCase)
+    const listProfitUseCase = container.resolve(ListProfitUseCase)
 
-    const profits = await listProfit.execute(userId)
+    const profits = await listProfitUseCase.execute(userId)
 
     return response.status(200).json(profits)
   }

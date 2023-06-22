@@ -4,6 +4,7 @@ import {
   CreateDateColumn,
   ManyToOne,
   PrimaryColumn,
+  JoinColumn,
 } from 'typeorm'
 import { v4 as uuidV4 } from 'uuid'
 import { User } from '@modules/accounts/infra/typeorm/entities/User'
@@ -19,7 +20,11 @@ class ProfitType {
   @Column()
   description: string
 
+  @Column()
+  userId: string
+
   @ManyToOne(() => User)
+  @JoinColumn({ name: 'userId' })
   user: User
 
   @CreateDateColumn()

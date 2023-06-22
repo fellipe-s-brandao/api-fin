@@ -1,36 +1,36 @@
-import { IExpenseTypeRepository } from '@modules/expense/repositories/IExpenseTypeRepository'
-import { IExpenseRepository } from '@modules/expense/repositories/IExpenseRepository'
 import { AppError } from '@shared/errors/AppError'
 import { inject, injectable } from 'tsyringe'
+import { IProfitTypeRepository } from '@modules/profit/repositories/IProfitTypeRepository'
+import { IProfitRepository } from '@modules/profit/repositories/IProfitRepository'
 
 @injectable()
-class DeleteExpenseTypeUseCase {
+class DeleteProfitTypeUseCase {
   constructor(
-    @inject('ExpenseTypeRepository')
-    private expenseTypeRepository: IExpenseTypeRepository,
+    @inject('ProfitTypeRepository')
+    private profitTypeRepository: IProfitTypeRepository,
 
-    @inject('ExpenseRepository')
-    private expensesRepository: IExpenseRepository,
-  ) { }
+    @inject('ProfitRepository')
+    private profitRepository: IProfitRepository,
+  ) {}
 
   async execute(id: string): Promise<void> {
-    const expenseType = await this.expenseTypeRepository.getById(id)
+    const profitType = await this.profitTypeRepository.getById(id)
 
-    if (!expenseType) {
-      throw new AppError('Expense Type not found', 404)
+    if (!profitType) {
+      throw new AppError('Profit Type not found', 404)
     }
 
-    const expense = await this.expensesRepository.getByExpenseTypeId(id)
+    const expense = await this.profitRepository.getAllByProfitTypeId(id)
 
     if (expense.length > 0) {
       throw new AppError(
-        'Type of expense linked to an expense, it is not possible to delete',
+        'Type of profit linked to an profit, it is not possible to delete',
         400,
       )
     }
 
-    await this.expenseTypeRepository.delete(id)
+    await this.profitRepository.delete(id)
   }
 }
 
-export { DeleteExpenseTypeUseCase }
+export { DeleteProfitTypeUseCase }

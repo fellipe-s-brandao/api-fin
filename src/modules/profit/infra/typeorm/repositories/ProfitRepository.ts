@@ -46,6 +46,14 @@ class ProfitRepository implements IProfitRepository {
       throw new QueryError(error)
     }
   }
+
+  async getAllByProfitTypeId(profitTypeId: string): Promise<Profit[]> {
+    try {
+      return await this.repository.find({ where: { profitTypeId } })
+    } catch (error) {
+      throw new QueryError(error)
+    }
+  }
 }
 
 export { ProfitRepository }

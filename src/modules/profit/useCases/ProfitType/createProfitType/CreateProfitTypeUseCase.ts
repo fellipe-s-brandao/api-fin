@@ -1,17 +1,17 @@
-import { IExpenseTypeRepository } from '@modules/expense/repositories/IExpenseTypeRepository'
 import { AppError } from '@shared/errors/AppError'
 import { inject, injectable } from 'tsyringe'
 import { ICreateProfitTypeDTO } from './dto/ICreateProfitTypeDTO'
-import { ExpenseType } from '@modules/expense/infra/typeorm/entities/ExpenseType'
+import { IProfitTypeRepository } from '@modules/profit/repositories/IProfitTypeRepository'
+import { ProfitType } from '@modules/profit/infra/typeorm/entities/ProfitType'
 
 @injectable()
 class CreateProfitTypeUseCase {
   constructor(
-    @inject('ExpenseTypeRepository')
-    private expenseTypeRepository: IExpenseTypeRepository,
+    @inject('ProfitTypeRepository')
+    private profitTypeRepository: IProfitTypeRepository,
   ) {}
 
-  async execute(data: ICreateProfitTypeDTO): Promise<ExpenseType> {
+  async execute(data: ICreateProfitTypeDTO): Promise<ProfitType> {
     if (!data.name) {
       throw new AppError('Name is empty')
     }
@@ -20,13 +20,13 @@ class CreateProfitTypeUseCase {
       throw new AppError('Description is empty')
     }
 
-    const expenseType = this.expenseTypeRepository.create(data)
+    const profitType = this.profitTypeRepository.create(data)
 
-    if (!expenseType) {
-      throw new AppError('Error creating expense type', 500)
+    if (!profitType) {
+      throw new AppError('Error creating profit type', 500)
     }
 
-    return expenseType
+    return profitType
   }
 }
 
