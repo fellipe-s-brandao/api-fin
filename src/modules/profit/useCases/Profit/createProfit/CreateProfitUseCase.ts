@@ -20,7 +20,7 @@ class CreateProfitUseCase {
       throw new AppError('Description is empty')
     }
 
-    if (typeof data.profitAmount !== 'number') {
+    if (!data.profitAmount) {
       throw new AppError('Profit amount is invalid')
     }
 
@@ -28,7 +28,7 @@ class CreateProfitUseCase {
       throw new AppError('Profit type ID is empty')
     }
 
-    if (!(data.profitDate instanceof Date)) {
+    if (!data.profitDate) {
       throw new AppError('Profit date is invalid')
     }
 
