@@ -10,6 +10,7 @@
     },
     "dependencies": {
         "bcrypt": "^5.0.1",
+        "cors": "^2.8.5",
         "dayjs": "^1.11.7",
         "express": "^4.17.2",
         "express-async-errors": "^3.1.1",
@@ -24,6 +25,7 @@
     "devDependencies": {
         "@rocketseat/eslint-config": "^1.2.0",
         "@types/bcrypt": "^5.0.0",
+        "@types/cors": "^2.8.13",
         "@types/express": "^4.17.13",
         "@types/jsonwebtoken": "^8.5.9",
         "@types/uuid": "^8.3.4",

@@ -59,6 +59,12 @@ class AuthenticateUserUseCase {
       expiresIn: expiresInToken,
     })
 
+    const existsUserToken = await this.userTokenRepository.findByUserId(user.id)
+
+    if (existsUserToken) {
+      await this.userTokenRepository.deleteById(existsUserToken.id)
+    }
+
     const refreshToken = sign({ email }, secretRefreshToken, {
       subject: user.id,
       expiresIn: expiresInRefreshToken,

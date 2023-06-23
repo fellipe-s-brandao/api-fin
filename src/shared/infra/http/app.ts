@@ -4,6 +4,8 @@ import 'express-async-errors'
 import { router } from './routes'
 import { AppError } from '@shared/errors/AppError'
 
+import cors from 'cors'
+
 import '@shared/container'
 
 import createConnection from '@shared/infra/typeorm'
@@ -11,6 +13,7 @@ import { QueryError } from '@shared/errors/QueryError'
 createConnection()
 
 const app = express()
+app.use(cors())
 app.use(express.json())
 
 app.use(router)
