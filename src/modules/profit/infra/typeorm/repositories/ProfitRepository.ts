@@ -33,7 +33,11 @@ class ProfitRepository implements IProfitRepository {
 
   async getAllByUserId(userId: string): Promise<Profit[]> {
     try {
-      return await this.repository.find({ where: { userId } })
+      return await this.repository
+        .createQueryBuilder('profit')
+        .innerJoinAndSelect('profit.profitType', 'profitType')
+        .where('profit.userId = :userId', { userId })
+        .getMany()
     } catch (error) {
       throw new QueryError(error)
     }
