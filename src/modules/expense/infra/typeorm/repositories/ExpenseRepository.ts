@@ -33,7 +33,11 @@ class ExpenseRepository implements IExpenseRepository {
 
   async getAllByUserId(userId: string): Promise<Expense[]> {
     try {
-      return await this.repository.find({ where: { userId } })
+      return await this.repository
+        .createQueryBuilder('expense')
+        .innerJoinAndSelect('expense.expenseType', 'expenseType')
+        .where('expense.userId = :userId', { userId })
+        .getMany()
     } catch (error) {
       throw new QueryError(error)
     }
