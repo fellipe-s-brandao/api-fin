@@ -1,8 +1,8 @@
 import { IExpenseTypeRepository } from '@modules/expense/repositories/IExpenseTypeRepository'
 import { getRepository, Repository } from 'typeorm'
 import { ExpenseType } from '../entities/ExpenseType'
-import { ICreateExpenseDTO } from '@modules/expense/useCases/Expense/createExpense/dto/ICreateExpenseDTO'
 import { QueryError } from '@shared/errors/QueryError'
+import { ICreateExpenseTypeDTO } from '@modules/expense/useCases/ExpenseType/createExpenseType/dto/ICreateExpenseTypeDTO'
 
 class ExpenseTypeRepository implements IExpenseTypeRepository {
   private repository: Repository<ExpenseType>
@@ -11,7 +11,7 @@ class ExpenseTypeRepository implements IExpenseTypeRepository {
     this.repository = getRepository(ExpenseType)
   }
 
-  async create(data: ICreateExpenseDTO): Promise<ExpenseType> {
+  async create(data: ICreateExpenseTypeDTO): Promise<ExpenseType> {
     try {
       let expenseType = this.repository.create(data)
 

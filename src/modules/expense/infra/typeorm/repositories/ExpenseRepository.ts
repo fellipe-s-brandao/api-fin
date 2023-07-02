@@ -1,8 +1,8 @@
 import { IExpenseRepository } from '@modules/expense/repositories/IExpenseRepository'
 import { getRepository, Repository } from 'typeorm'
 import { Expense } from '../entities/Expense'
-import { ICreateExpenseDTO } from '@modules/expense/useCases/Expense/createExpense/dto/ICreateExpenseDTO'
 import { QueryError } from '@shared/errors/QueryError'
+import { ICreateExpenseDTO } from '@modules/expense/useCases/Expense/dto/ICreateExpenseDTO'
 
 class ExpenseRepository implements IExpenseRepository {
   private repository: Repository<Expense>
