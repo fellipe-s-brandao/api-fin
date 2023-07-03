@@ -2,7 +2,7 @@ import { IExpenseTypeRepository } from '@modules/expense/repositories/IExpenseTy
 import { getRepository, Repository } from 'typeorm'
 import { ExpenseType } from '../entities/ExpenseType'
 import { QueryError } from '@shared/errors/QueryError'
-import { ICreateExpenseTypeDTO } from '@modules/expense/useCases/ExpenseType/createExpenseType/dto/ICreateExpenseTypeDTO'
+import { ICreateExpenseTypeDTO } from '@modules/expense/useCases/ExpenseType/dto/ICreateExpenseTypeDTO'
 
 class ExpenseTypeRepository implements IExpenseTypeRepository {
   private repository: Repository<ExpenseType>

@@ -1,5 +1,5 @@
 import { ExpenseType } from '../infra/typeorm/entities/ExpenseType'
-import { ICreateExpenseTypeDTO } from '../useCases/ExpenseType/createExpenseType/dto/ICreateExpenseTypeDTO'
+import { ICreateExpenseTypeDTO } from '../useCases/ExpenseType/dto/ICreateExpenseTypeDTO'
 
 interface IExpenseTypeRepository {
   create(data: ICreateExpenseTypeDTO): Promise<ExpenseType>
