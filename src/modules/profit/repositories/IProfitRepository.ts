@@ -1,5 +1,5 @@
 import { Profit } from '../infra/typeorm/entities/Profit'
-import { ICreateProfitDTO } from '../useCases/Profit/createProfit/dto/ICreateProfitDTO'
+import { ICreateProfitDTO } from '../useCases/Profit/dto/ICreateProfitDTO'
 
 interface IProfitRepository {
   create(data: ICreateProfitDTO): Promise<Profit>

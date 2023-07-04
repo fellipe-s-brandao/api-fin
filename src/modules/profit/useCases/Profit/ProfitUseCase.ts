@@ -5,13 +5,13 @@ import { IProfitRepository } from '@modules/profit/repositories/IProfitRepositor
 import { Profit } from '@modules/profit/infra/typeorm/entities/Profit'
 
 @injectable()
-class CreateProfitUseCase {
+class ProfitUseCase {
   constructor(
     @inject('ProfitRepository')
     private profitRepository: IProfitRepository,
   ) {}
 
-  async execute(data: ICreateProfitDTO): Promise<Profit> {
+  async createProfit(data: ICreateProfitDTO): Promise<Profit> {
     if (!data.name) {
       throw new AppError('Name is empty')
     }
@@ -40,6 +40,42 @@ class CreateProfitUseCase {
 
     return profit
   }
+
+  async deleteProfit(id: string): Promise<void> {
+    const profit = await this.profitRepository.getById(id)
+
+    if (!profit) {
+      throw new AppError('Profit not found', 404)
+    }
+
+    await this.profitRepository.delete(id)
+  }
+
+  async listProfit(userId: string): Promise<Profit[]> {
+    return await this.profitRepository.getAllByUserId(userId)
+  }
+
+  async updateProfit(data: ICreateProfitDTO): Promise<Profit> {
+    if (
+      !data.name &&
+      !data.description &&
+      !data.profitAmount &&
+      !data.profitTypeId &&
+      !data.profitDate
+    ) {
+      throw new AppError('No item was provided')
+    }
+
+    let profit = await this.profitRepository.getById(data.id)
+
+    if (!profit) {
+      throw new AppError('Profit not found', 404)
+    }
+
+    profit = Object.assign(profit, data)
+
+    return await this.profitRepository.create(profit)
+  }
 }
 
-export { CreateProfitUseCase }
+export { ProfitUseCase }

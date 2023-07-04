@@ -1,22 +1,32 @@
 import { Router } from 'express'
 import { ensureAuthenticated } from '../middlewares/ensureAuthenticated'
-import { CreateProfitController } from '@modules/profit/useCases/Profit/createProfit/CreateProfitController'
-import { ListProfitController } from '@modules/profit/useCases/Profit/listProfit/ListProfitController'
-import { UpdateProfitController } from '@modules/profit/useCases/Profit/updateProfit/UpdateProfitController'
-import { DeleteProfitController } from '@modules/profit/useCases/Profit/deleteProfit/DeleteProfitController'
+import { ProfitController } from '@modules/profit/useCases/Profit/ProfitController'
 
 const profitRoutes = Router()
-const createProfitController = new CreateProfitController()
-const listProfitController = new ListProfitController()
-const updateProfitController = new UpdateProfitController()
-const deleteProfitController = new DeleteProfitController()
+const profitController = new ProfitController()
 
-profitRoutes.post('/', ensureAuthenticated, createProfitController.handle)
+profitRoutes.post(
+  '/',
+  ensureAuthenticated,
+  profitController.createProfitController,
+)
 
-profitRoutes.get('/', ensureAuthenticated, listProfitController.handle)
+profitRoutes.get(
+  '/',
+  ensureAuthenticated,
+  profitController.listProfitController,
+)
 
-profitRoutes.put('/:id', ensureAuthenticated, updateProfitController.handle)
+profitRoutes.put(
+  '/:id',
+  ensureAuthenticated,
+  profitController.updateProfitController,
+)
 
-profitRoutes.delete('/:id', ensureAuthenticated, deleteProfitController.handle)
+profitRoutes.delete(
+  '/:id',
+  ensureAuthenticated,
+  profitController.delteProfitController,
+)
 
 export { profitRoutes }

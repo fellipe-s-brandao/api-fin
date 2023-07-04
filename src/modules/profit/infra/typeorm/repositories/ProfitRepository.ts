@@ -1,8 +1,8 @@
 import { QueryError } from '@shared/errors/QueryError'
 import { Repository, getRepository } from 'typeorm'
 import { Profit } from '../entities/Profit'
-import { ICreateProfitDTO } from '@modules/profit/useCases/Profit/createProfit/dto/ICreateProfitDTO'
 import { IProfitRepository } from '@modules/profit/repositories/IProfitRepository'
+import { ICreateProfitDTO } from '@modules/profit/useCases/Profit/dto/ICreateProfitDTO'
 
 class ProfitRepository implements IProfitRepository {
   private repository: Repository<Profit>
