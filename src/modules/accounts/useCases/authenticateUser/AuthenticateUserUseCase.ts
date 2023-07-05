@@ -45,13 +45,13 @@ class AuthenticateUserUseCase {
     } = auth
 
     if (!user) {
-      throw new AppError('Email or password incorrect!')
+      throw new AppError('E-mail ou senha incorreta, tente novamente!')
     }
 
     const passwordMatch = await compare(password, user.password)
 
     if (!passwordMatch) {
-      throw new AppError('Email or password incorrect!')
+      throw new AppError('E-mail ou senha incorreta, tente novamente!')
     }
 
     const token = sign({}, secretToken, {
