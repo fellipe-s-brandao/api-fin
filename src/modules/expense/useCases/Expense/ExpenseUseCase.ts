@@ -17,7 +17,7 @@ class ExpenseUseCase {
 
   async createExpense(data: ICreateExpenseDTO): Promise<Expense> {
     if (!data.name) {
-      throw new AppError('Nome do gasto não foi informado!')
+      throw new AppError('Nome da despesa não foi informada!')
     }
 
     if (!data.description) {
@@ -25,15 +25,15 @@ class ExpenseUseCase {
     }
 
     if (!data.amountSpent) {
-      throw new AppError('Valor gasto não informado!')
+      throw new AppError('Valor despesa não informada!')
     }
 
     if (!data.expenseTypeId) {
-      throw new AppError('Tipo de gasto não informado!')
+      throw new AppError('Tipo de despesa não informada!')
     }
 
     if (!data.expenseTypeId) {
-      throw new AppError('Data do gasto não informado!')
+      throw new AppError('Data do despesa não informada!')
     }
 
     const expenseType = await this.expenseTypeRepository.getById(
@@ -41,13 +41,13 @@ class ExpenseUseCase {
     )
 
     if (!expenseType) {
-      throw new AppError('Tipo de gasto não encontrado!', 401)
+      throw new AppError('Tipo de despesa não encontrada!', 401)
     }
 
     const expense = this.expensesRepository.create(data)
 
     if (!expense) {
-      throw new AppError('Erro ao criar gasto!', 500)
+      throw new AppError('Erro ao criar despesa!', 500)
     }
 
     return expense
@@ -57,7 +57,7 @@ class ExpenseUseCase {
     const expense = await this.expensesRepository.getById(id)
 
     if (!expense) {
-      throw new AppError('Gasto não encontrado!', 404)
+      throw new AppError('Despesa não encontrada!', 404)
     }
 
     await this.expensesRepository.delete(id)
@@ -81,7 +81,7 @@ class ExpenseUseCase {
     let expense = await this.expensesRepository.getById(data.id)
 
     if (!expense) {
-      throw new AppError('Gasto não encontrado', 404)
+      throw new AppError('Despesa não encontrada', 404)
     }
 
     expense = Object.assign(expense, data)

@@ -9,10 +9,10 @@
 - [x] Excluir os gastos
 
 ### Tipo de gastos
-- [x] Salvar o tipo de gasto
-- [x] Listar o tipo de gasto
-- [x] Editar o tipo de gasto
-- [x] Excluir o tipo de gasto
+- [x] Salvar o tipo de despesa
+- [x] Listar o tipo de despesa
+- [x] Editar o tipo de despesa
+- [x] Excluir o tipo de despesa
 
 ### Lucro
 - [x] Salvar o Lucro
