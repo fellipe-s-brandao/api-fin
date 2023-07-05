@@ -17,23 +17,23 @@ class ExpenseUseCase {
 
   async createExpense(data: ICreateExpenseDTO): Promise<Expense> {
     if (!data.name) {
-      throw new AppError('Name is empty')
+      throw new AppError('Nome do gasto não foi informado!')
     }
 
     if (!data.description) {
-      throw new AppError('Description is empty')
+      throw new AppError('Descrição não informada!')
     }
 
     if (!data.amountSpent) {
-      throw new AppError('Spent amount is empty')
+      throw new AppError('Valor gasto não informado!')
     }
 
     if (!data.expenseTypeId) {
-      throw new AppError('Expense type is empty')
+      throw new AppError('Tipo de gasto não informado!')
     }
 
     if (!data.expenseTypeId) {
-      throw new AppError('Expense date is empty')
+      throw new AppError('Data do gasto não informado!')
     }
 
     const expenseType = await this.expenseTypeRepository.getById(
@@ -41,13 +41,13 @@ class ExpenseUseCase {
     )
 
     if (!expenseType) {
-      throw new AppError('Expense type not found', 401)
+      throw new AppError('Tipo de gasto não encontrado!', 401)
     }
 
     const expense = this.expensesRepository.create(data)
 
     if (!expense) {
-      throw new AppError('Rrror creating expense', 500)
+      throw new AppError('Erro ao criar gasto!', 500)
     }
 
     return expense
@@ -57,7 +57,7 @@ class ExpenseUseCase {
     const expense = await this.expensesRepository.getById(id)
 
     if (!expense) {
-      throw new AppError('Expense not found', 404)
+      throw new AppError('Gasto não encontrado!', 404)
     }
 
     await this.expensesRepository.delete(id)
@@ -75,13 +75,13 @@ class ExpenseUseCase {
       !data.expenseTypeId &&
       !data.expenseDate
     ) {
-      throw new AppError('No item was provided')
+      throw new AppError('Nenhum dado fornecido para atualização!')
     }
 
     let expense = await this.expensesRepository.getById(data.id)
 
     if (!expense) {
-      throw new AppError('Expense not found', 404)
+      throw new AppError('Gasto não encontrado', 404)
     }
 
     expense = Object.assign(expense, data)

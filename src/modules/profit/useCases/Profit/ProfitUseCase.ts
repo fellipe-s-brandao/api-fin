@@ -13,29 +13,29 @@ class ProfitUseCase {
 
   async createProfit(data: ICreateProfitDTO): Promise<Profit> {
     if (!data.name) {
-      throw new AppError('Name is empty')
+      throw new AppError('Nome do lucro não foi informado!')
     }
 
     if (!data.description) {
-      throw new AppError('Description is empty')
+      throw new AppError('Descrição não informada!')
     }
 
     if (!data.profitAmount) {
-      throw new AppError('Profit amount is invalid')
+      throw new AppError('Valor do lucro não informado!')
     }
 
     if (!data.profitTypeId) {
-      throw new AppError('Profit type ID is empty')
+      throw new AppError('Tipo de lucro não informado!')
     }
 
     if (!data.profitDate) {
-      throw new AppError('Profit date is invalid')
+      throw new AppError('Data do lucro não informada!')
     }
 
     const profit = this.profitRepository.create(data)
 
     if (!profit) {
-      throw new AppError('Error creating profit', 500)
+      throw new AppError('Erro ao criar novo lucro!', 500)
     }
 
     return profit
@@ -45,7 +45,7 @@ class ProfitUseCase {
     const profit = await this.profitRepository.getById(id)
 
     if (!profit) {
-      throw new AppError('Profit not found', 404)
+      throw new AppError('Lucro não encontrado!', 404)
     }
 
     await this.profitRepository.delete(id)
@@ -63,13 +63,13 @@ class ProfitUseCase {
       !data.profitTypeId &&
       !data.profitDate
     ) {
-      throw new AppError('No item was provided')
+      throw new AppError('Nenhum item fornecido para atualizar o lucro!')
     }
 
     let profit = await this.profitRepository.getById(data.id)
 
     if (!profit) {
-      throw new AppError('Profit not found', 404)
+      throw new AppError('Lucro não encontrado!', 404)
     }
 
     profit = Object.assign(profit, data)

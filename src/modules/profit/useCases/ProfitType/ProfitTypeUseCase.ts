@@ -17,17 +17,17 @@ class ProfitTypeUseCase {
 
   async createProfitType(data: ICreateProfitTypeDTO): Promise<ProfitType> {
     if (!data.name) {
-      throw new AppError('Name is empty')
+      throw new AppError('Nome do tipo de lucro não foi informado!')
     }
 
     if (!data.description) {
-      throw new AppError('Description is empty')
+      throw new AppError('Descrição não informada!')
     }
 
     const profitType = this.profitTypeRepository.create(data)
 
     if (!profitType) {
-      throw new AppError('Error creating profit type', 500)
+      throw new AppError('Erro ao criar novo tipo de lucro!', 500)
     }
 
     return profitType
@@ -37,14 +37,14 @@ class ProfitTypeUseCase {
     const profitType = await this.profitTypeRepository.getById(id)
 
     if (!profitType) {
-      throw new AppError('Profit Type not found', 404)
+      throw new AppError('Tipo de lucro não encontrado!', 404)
     }
 
     const expense = await this.profitRepository.getAllByProfitTypeId(id)
 
     if (expense.length > 0) {
       throw new AppError(
-        'Type of profit linked to an profit, it is not possible to delete',
+        'Tipo de lucro vinculado a um lucro, não é possível deletar',
         400,
       )
     }
@@ -58,13 +58,15 @@ class ProfitTypeUseCase {
 
   async updateProfitType(data: ICreateProfitTypeDTO): Promise<ProfitType> {
     if (!data.name && !data.description) {
-      throw new AppError('No item was provided')
+      throw new AppError(
+        'Nenhum item fornecido para atualizar o tipo de lucro!',
+      )
     }
 
     let profitType = await this.profitTypeRepository.getById(data.id)
 
     if (!profitType) {
-      throw new AppError('Expense not found', 404)
+      throw new AppError('Tipo de lucro não encontrado!', 404)
     }
 
     profitType = Object.assign(profitType, data)

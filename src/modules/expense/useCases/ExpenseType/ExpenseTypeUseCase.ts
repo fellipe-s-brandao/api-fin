@@ -17,17 +17,17 @@ class ExpenseTypeUseCase {
 
   async createExpenseType(data: ICreateExpenseTypeDTO): Promise<ExpenseType> {
     if (!data.name) {
-      throw new AppError('Name is empty')
+      throw new AppError('Nome do gasto não foi informado!')
     }
 
     if (!data.description) {
-      throw new AppError('Description is empty')
+      throw new AppError('Descrição não informada!')
     }
 
     const expenseType = this.expenseTypeRepository.create(data)
 
     if (!expenseType) {
-      throw new AppError('Error creating expense type', 500)
+      throw new AppError('Erro ao criar novo tipo de gasto!', 500)
     }
 
     return expenseType
@@ -37,14 +37,14 @@ class ExpenseTypeUseCase {
     const expenseType = await this.expenseTypeRepository.getById(id)
 
     if (!expenseType) {
-      throw new AppError('Expense Type not found', 404)
+      throw new AppError('Tipo de gasto não encontrado!', 404)
     }
 
     const expense = await this.expensesRepository.getByExpenseTypeId(id)
 
     if (expense.length > 0) {
       throw new AppError(
-        'Type of expense linked to an expense, it is not possible to delete',
+        'Tipo de gasto vinculado a um gasto, não é possível deletar!',
         400,
       )
     }
@@ -58,13 +58,15 @@ class ExpenseTypeUseCase {
 
   async updateExpenseType(data: ICreateExpenseTypeDTO): Promise<ExpenseType> {
     if (!data.name && !data.description) {
-      throw new AppError('No item was provided')
+      throw new AppError(
+        'Nenhum item fornecido para atualizar o tipo de gasto!',
+      )
     }
 
     let expenseType = await this.expenseTypeRepository.getById(data.id)
 
     if (!expenseType) {
-      throw new AppError('Expense not found', 404)
+      throw new AppError('Tipo de gasto não encontrado!', 404)
     }
 
     expenseType = Object.assign(expenseType, data)
