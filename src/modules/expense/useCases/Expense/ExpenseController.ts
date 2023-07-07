@@ -61,6 +61,15 @@ class ExpenseController {
 
     return response.status(200).json(expense)
   }
+
+  async listExpenseByIdController(request: Request, response: Response) {
+    const { id } = request.params
+
+    const expenseUseCase = container.resolve(ExpenseUseCase)
+    const expenses = await expenseUseCase.listExpenseById(id)
+
+    return response.status(200).json(expenses)
+  }
 }
 
 export { ExpenseController }

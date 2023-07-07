@@ -88,6 +88,20 @@ class ExpenseUseCase {
 
     return await this.expensesRepository.create(expense)
   }
+
+  async listExpenseById(id: string): Promise<Expense> {
+    if (!id) {
+      throw new AppError('Id da Despesa não informada!')
+    }
+
+    const expense = await this.expensesRepository.getById(id)
+
+    if (!expense) {
+      throw new AppError('Despesa não encontrada!', 404)
+    }
+
+    return expense
+  }
 }
 
 export { ExpenseUseCase }

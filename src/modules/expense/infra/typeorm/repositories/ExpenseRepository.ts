@@ -37,6 +37,7 @@ class ExpenseRepository implements IExpenseRepository {
         .createQueryBuilder('expense')
         .innerJoinAndSelect('expense.expenseType', 'expenseType')
         .where('expense.userId = :userId', { userId })
+        .orderBy('expense.expenseDate', 'DESC')
         .getMany()
     } catch (error) {
       throw new QueryError(error)

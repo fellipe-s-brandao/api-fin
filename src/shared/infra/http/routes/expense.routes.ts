@@ -29,4 +29,10 @@ expenseRoutes.delete(
   expenseController.deleteExpenseController,
 )
 
+expenseRoutes.get(
+  '/byId/:id',
+  ensureAuthenticated,
+  expenseController.listExpenseByIdController,
+)
+
 export { expenseRoutes }
