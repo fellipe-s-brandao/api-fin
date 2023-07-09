@@ -4,6 +4,7 @@ import { AppError } from '@shared/errors/AppError'
 import { inject, injectable } from 'tsyringe'
 import { ICreateExpenseDTO } from './dto/ICreateExpenseDTO'
 import { IExpenseTypeRepository } from '@modules/expense/repositories/IExpenseTypeRepository'
+import { IDateProvider } from '@shared/container/providers/DateProvider/IDateProvider'
 
 @injectable()
 class ExpenseUseCase {
@@ -13,6 +14,9 @@ class ExpenseUseCase {
 
     @inject('ExpenseTypeRepository')
     private expenseTypeRepository: IExpenseTypeRepository,
+
+    @inject('DayJsDateProvider')
+    private dayJsDateProvider: IDateProvider,
   ) {}
 
   async createExpense(data: ICreateExpenseDTO): Promise<Expense> {
@@ -44,6 +48,7 @@ class ExpenseUseCase {
       throw new AppError('Tipo de despesa não encontrada!', 401)
     }
 
+    data.expenseDate = this.dayJsDateProvider.toDate(data.expenseDate)
     const expense = this.expensesRepository.create(data)
 
     if (!expense) {
@@ -84,6 +89,7 @@ class ExpenseUseCase {
       throw new AppError('Despesa não encontrada', 404)
     }
 
+    data.expenseDate = this.dayJsDateProvider.toDate(data.expenseDate)
     expense = Object.assign(expense, data)
 
     return await this.expensesRepository.create(expense)

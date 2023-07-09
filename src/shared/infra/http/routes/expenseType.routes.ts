@@ -8,7 +8,7 @@ const expenseTypeController = new ExpenseTypeController()
 expenseTypeRoutes.post(
   '/',
   ensureAuthenticated,
-  expenseTypeController.listExpenseTypeController,
+  expenseTypeController.createExpenseTypeController,
 )
 
 expenseTypeRoutes.get(

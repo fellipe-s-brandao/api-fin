@@ -10,6 +10,8 @@ import '@shared/container'
 
 import createConnection from '@shared/infra/typeorm'
 import { QueryError } from '@shared/errors/QueryError'
+
+process.env.TZ = 'America/Sao_Paulo'
 createConnection()
 
 const app = express()

@@ -3,12 +3,16 @@ import { inject, injectable } from 'tsyringe'
 import { ICreateProfitDTO } from './dto/ICreateProfitDTO'
 import { IProfitRepository } from '@modules/profit/repositories/IProfitRepository'
 import { Profit } from '@modules/profit/infra/typeorm/entities/Profit'
+import { IDateProvider } from '@shared/container/providers/DateProvider/IDateProvider'
 
 @injectable()
 class ProfitUseCase {
   constructor(
     @inject('ProfitRepository')
     private profitRepository: IProfitRepository,
+
+    @inject('DayJsDateProvider')
+    private dayJsDateProvider: IDateProvider,
   ) {}
 
   async createProfit(data: ICreateProfitDTO): Promise<Profit> {
@@ -32,6 +36,7 @@ class ProfitUseCase {
       throw new AppError('Data do lucro não informada!')
     }
 
+    data.profitDate = this.dayJsDateProvider.toDate(data.profitDate)
     const profit = this.profitRepository.create(data)
 
     if (!profit) {
@@ -66,6 +71,7 @@ class ProfitUseCase {
       throw new AppError('Nenhum item fornecido para atualizar o lucro!')
     }
 
+    data.profitDate = this.dayJsDateProvider.toDate(data.profitDate)
     let profit = await this.profitRepository.getById(data.id)
 
     if (!profit) {
