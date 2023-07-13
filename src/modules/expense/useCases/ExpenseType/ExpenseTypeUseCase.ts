@@ -73,6 +73,20 @@ class ExpenseTypeUseCase {
 
     return await this.expenseTypeRepository.create(expenseType)
   }
+
+  async listExpenseTypeById(id: string): Promise<ExpenseType> {
+    if (!id) {
+      throw new AppError('Id do tipo de fespesa não informado!')
+    }
+
+    const expenseType = await this.expenseTypeRepository.getById(id)
+
+    if (!expenseType) {
+      throw new AppError('Tipo de despesa não encontrada!', 404)
+    }
+
+    return expenseType
+  }
 }
 
 export { ExpenseTypeUseCase }

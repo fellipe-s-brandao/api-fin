@@ -23,6 +23,12 @@ expenseTypeRoutes.put(
   expenseTypeController.updateExpenseTypeController,
 )
 
+expenseTypeRoutes.get(
+  '/:id',
+  ensureAuthenticated,
+  expenseTypeController.listExpenseTypeByIdController,
+)
+
 expenseTypeRoutes.delete(
   '/:id',
   ensureAuthenticated,

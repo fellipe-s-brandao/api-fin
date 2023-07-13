@@ -47,14 +47,23 @@ class ExpenseTypeController {
 
     const expenseTypeUseCase = container.resolve(ExpenseTypeUseCase)
 
-    const expense = await expenseTypeUseCase.updateExpenseType({
+    const expenseType = await expenseTypeUseCase.updateExpenseType({
       id,
       name,
       description,
       userId,
     })
 
-    return response.status(200).json(expense)
+    return response.status(200).json(expenseType)
+  }
+
+  async listExpenseTypeByIdController(request: Request, response: Response) {
+    const { id } = request.params
+
+    const expenseTypeUseCase = container.resolve(ExpenseTypeUseCase)
+    const expenseType = await expenseTypeUseCase.listExpenseTypeById(id)
+
+    return response.status(200).json(expenseType)
   }
 }
 
