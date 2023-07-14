@@ -40,20 +40,34 @@ class ProfitTypeUseCase {
       throw new AppError('Tipo de lucro não encontrado!', 404)
     }
 
-    const expense = await this.profitRepository.getAllByProfitTypeId(id)
+    const profit = await this.profitRepository.getAllByProfitTypeId(id)
 
-    if (expense.length > 0) {
+    if (profit.length > 0) {
       throw new AppError(
         'Tipo de lucro vinculado a um lucro, não é possível deletar',
         400,
       )
     }
 
-    await this.profitRepository.delete(id)
+    await this.profitTypeRepository.delete(id)
   }
 
   async listProfitType(userId: string): Promise<ProfitType[]> {
     return await this.profitTypeRepository.getAllByUserId(userId)
+  }
+
+  async listProfitTypetById(id: string): Promise<ProfitType> {
+    if (!id) {
+      throw new AppError('Id do tipo de lucro não informado!')
+    }
+
+    const profitType = await this.profitTypeRepository.getById(id)
+
+    if (!profitType) {
+      throw new AppError('Tipo de lucro não encontrado!', 404)
+    }
+
+    return profitType
   }
 
   async updateProfitType(data: ICreateProfitTypeDTO): Promise<ProfitType> {

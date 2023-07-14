@@ -33,7 +33,10 @@ class ProfitTypeRepository implements IProfitTypeRepository {
 
   async getAllByUserId(userId: string): Promise<ProfitType[]> {
     try {
-      return await this.repository.find({ where: { userId } })
+      return await this.repository.find({
+        where: { userId },
+        order: { id: 'DESC' },
+      })
     } catch (error) {
       throw new QueryError(error)
     }

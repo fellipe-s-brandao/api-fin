@@ -60,6 +60,20 @@ class ProfitUseCase {
     return await this.profitRepository.getAllByUserId(userId)
   }
 
+  async listProfitById(id: string): Promise<Profit> {
+    if (!id) {
+      throw new AppError('Id do lucro não informado!')
+    }
+
+    const profit = await this.profitRepository.getById(id)
+
+    if (!profit) {
+      throw new AppError('Lucro não encontrado!', 404)
+    }
+
+    return profit
+  }
+
   async updateProfit(data: ICreateProfitDTO): Promise<Profit> {
     if (
       !data.name &&

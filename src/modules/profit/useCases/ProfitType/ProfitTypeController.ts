@@ -55,6 +55,15 @@ class ProfitTypeController {
 
     return response.status(200).json(profitType)
   }
+
+  async listProfitTypeByIdController(request: Request, response: Response) {
+    const { id } = request.params
+
+    const profitTypeUseCase = container.resolve(ProfitTypeUseCase)
+    const profitType = await profitTypeUseCase.listProfitTypetById(id)
+
+    return response.status(200).json(profitType)
+  }
 }
 
 export { ProfitTypeController }

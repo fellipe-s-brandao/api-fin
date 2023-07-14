@@ -24,7 +24,7 @@ expenseTypeRoutes.put(
 )
 
 expenseTypeRoutes.get(
-  '/:id',
+  '/byId/:id',
   ensureAuthenticated,
   expenseTypeController.listExpenseTypeByIdController,
 )

@@ -23,6 +23,12 @@ profitRoutes.put(
   profitController.updateProfitController,
 )
 
+profitRoutes.get(
+  '/byId/:id',
+  ensureAuthenticated,
+  profitController.listProfitByIdController,
+)
+
 profitRoutes.delete(
   '/:id',
   ensureAuthenticated,

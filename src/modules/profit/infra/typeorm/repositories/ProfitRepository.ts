@@ -37,6 +37,7 @@ class ProfitRepository implements IProfitRepository {
         .createQueryBuilder('profit')
         .innerJoinAndSelect('profit.profitType', 'profitType')
         .where('profit.userId = :userId', { userId })
+        .orderBy('profit.profitDate', 'DESC')
         .getMany()
     } catch (error) {
       throw new QueryError(error)

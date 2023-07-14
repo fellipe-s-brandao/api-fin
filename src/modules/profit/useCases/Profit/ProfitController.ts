@@ -51,7 +51,7 @@ class ProfitController {
 
     const profitUseCase = container.resolve(ProfitUseCase)
 
-    const expense = await profitUseCase.updateProfit({
+    const profit = await profitUseCase.updateProfit({
       id,
       name,
       description,
@@ -61,7 +61,16 @@ class ProfitController {
       profitDate,
     })
 
-    return response.status(200).json(expense)
+    return response.status(200).json(profit)
+  }
+
+  async listProfitByIdController(request: Request, response: Response) {
+    const { id } = request.params
+
+    const profitUseCase = container.resolve(ProfitUseCase)
+    const profit = await profitUseCase.listProfitById(id)
+
+    return response.status(200).json(profit)
   }
 }
 
