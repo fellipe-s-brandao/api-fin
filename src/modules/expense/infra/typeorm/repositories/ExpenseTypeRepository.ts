@@ -1,7 +1,6 @@
 import { IExpenseTypeRepository } from '@modules/expense/repositories/IExpenseTypeRepository'
 import { getRepository, Repository } from 'typeorm'
 import { ExpenseType } from '../entities/ExpenseType'
-import { QueryError } from '@shared/errors/QueryError'
 import { ICreateExpenseTypeDTO } from '@modules/expense/useCases/ExpenseType/dto/ICreateExpenseTypeDTO'
 
 class ExpenseTypeRepository implements IExpenseTypeRepository {
@@ -12,50 +11,30 @@ class ExpenseTypeRepository implements IExpenseTypeRepository {
   }
 
   async create(data: ICreateExpenseTypeDTO): Promise<ExpenseType> {
-    try {
-      let expenseType = this.repository.create(data)
+    let expenseType = this.repository.create(data)
 
-      expenseType = await this.repository.save(expenseType)
+    expenseType = await this.repository.save(expenseType)
 
-      return expenseType
-    } catch (error) {
-      throw new QueryError(error)
-    }
+    return expenseType
   }
 
   async delete(id: string): Promise<void> {
-    try {
-      await this.repository.delete(id)
-    } catch (error) {
-      throw new QueryError(error)
-    }
+    await this.repository.delete(id)
   }
 
   async getAll(): Promise<ExpenseType[]> {
-    try {
-      return await this.repository.find()
-    } catch (error) {
-      throw new QueryError(error)
-    }
+    return await this.repository.find()
   }
 
   async getById(id: string): Promise<ExpenseType> {
-    try {
-      return await this.repository.findOne({ where: { id } })
-    } catch (error) {
-      throw new QueryError(error)
-    }
+    return await this.repository.findOne({ where: { id } })
   }
 
   async getAllByUserId(userId: string): Promise<ExpenseType[]> {
-    try {
-      return await this.repository.find({
-        where: { userId },
-        order: { id: 'DESC' },
-      })
-    } catch (error) {
-      throw new QueryError(error)
-    }
+    return await this.repository.find({
+      where: { userId },
+      order: { id: 'DESC' },
+    })
   }
 }
 
