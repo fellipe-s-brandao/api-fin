@@ -16,76 +16,108 @@ class ProfitTypeUseCase {
   ) {}
 
   async createProfitType(data: ICreateProfitTypeDTO): Promise<ProfitType> {
-    if (!data.name) {
-      throw new AppError('Nome do tipo de lucro não foi informado!')
+    try {
+      if (!data.name) {
+        throw new AppError('Nome do tipo de lucro não foi informado!')
+      }
+
+      if (!data.description) {
+        throw new AppError('Descrição não informada!')
+      }
+
+      const profitType = this.profitTypeRepository.create(data)
+
+      if (!profitType) {
+        throw new AppError('Erro ao criar novo tipo de lucro!', 500)
+      }
+
+      return profitType
+    } catch (error) {
+      throw new AppError(
+        'Ocorreu um erro ao criar novo tipo de lucro',
+        500,
+        error,
+      )
     }
-
-    if (!data.description) {
-      throw new AppError('Descrição não informada!')
-    }
-
-    const profitType = this.profitTypeRepository.create(data)
-
-    if (!profitType) {
-      throw new AppError('Erro ao criar novo tipo de lucro!', 500)
-    }
-
-    return profitType
   }
 
   async deleteProfitType(id: string): Promise<void> {
-    const profitType = await this.profitTypeRepository.getById(id)
+    try {
+      const profitType = await this.profitTypeRepository.getById(id)
 
-    if (!profitType) {
-      throw new AppError('Tipo de lucro não encontrado!', 404)
+      if (!profitType) {
+        throw new AppError('Tipo de lucro não encontrado!', 404)
+      }
+
+      const profit = await this.profitRepository.getAllByProfitTypeId(id)
+
+      if (profit.length > 0) {
+        throw new AppError(
+          'Tipo de lucro vinculado a um lucro, não é possível deletar',
+          400,
+        )
+      }
+
+      await this.profitTypeRepository.delete(id)
+    } catch (error) {
+      throw new AppError('Ocorreu um erro ao deletar tipo de lucro', 500, error)
     }
-
-    const profit = await this.profitRepository.getAllByProfitTypeId(id)
-
-    if (profit.length > 0) {
-      throw new AppError(
-        'Tipo de lucro vinculado a um lucro, não é possível deletar',
-        400,
-      )
-    }
-
-    await this.profitTypeRepository.delete(id)
   }
 
   async listProfitType(userId: string): Promise<ProfitType[]> {
-    return await this.profitTypeRepository.getAllByUserId(userId)
+    try {
+      return await this.profitTypeRepository.getAllByUserId(userId)
+    } catch (error) {
+      throw new AppError(
+        'Ocorreu um erro ao buscar tipos de lucros',
+        500,
+        error,
+      )
+    }
   }
 
   async listProfitTypetById(id: string): Promise<ProfitType> {
-    if (!id) {
-      throw new AppError('Id do tipo de lucro não informado!')
+    try {
+      if (!id) {
+        throw new AppError('Id do tipo de lucro não informado!')
+      }
+
+      const profitType = await this.profitTypeRepository.getById(id)
+
+      if (!profitType) {
+        throw new AppError('Tipo de lucro não encontrado!', 404)
+      }
+
+      return profitType
+    } catch (error) {
+      throw new AppError('Ocorreu um erro ao buscar tipo de lucro', 500, error)
     }
-
-    const profitType = await this.profitTypeRepository.getById(id)
-
-    if (!profitType) {
-      throw new AppError('Tipo de lucro não encontrado!', 404)
-    }
-
-    return profitType
   }
 
   async updateProfitType(data: ICreateProfitTypeDTO): Promise<ProfitType> {
-    if (!data.name && !data.description) {
+    try {
+      if (!data.name && !data.description) {
+        throw new AppError(
+          'Nenhum item fornecido para atualizar o tipo de lucro!',
+        )
+      }
+
+      let profitType = await this.profitTypeRepository.getById(data.id)
+
+      if (!profitType) {
+        throw new AppError('Tipo de lucro não encontrado!', 404)
+      }
+
+      profitType = Object.assign(profitType, data)
+
+      return await this.profitTypeRepository.create(profitType)
+    } catch (error) {
       throw new AppError(
-        'Nenhum item fornecido para atualizar o tipo de lucro!',
+        'Ocorreu um erro ao atualizar tipo de lucro',
+        500,
+        error,
       )
     }
-
-    let profitType = await this.profitTypeRepository.getById(data.id)
-
-    if (!profitType) {
-      throw new AppError('Tipo de lucro não encontrado!', 404)
-    }
-
-    profitType = Object.assign(profitType, data)
-
-    return await this.profitTypeRepository.create(profitType)
   }
 }
 
