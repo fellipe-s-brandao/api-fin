@@ -31,28 +31,37 @@ class ExpenseRepository implements IExpenseRepository {
       .createQueryBuilder('expense')
       .innerJoinAndSelect('expense.expenseType', 'expenseType')
       .where('expense.userId = :userId', { userId })
-      .orderBy('expense.expenseDate', 'DESC')
 
     if (filters.name) {
-      query.where('expense.name like :name', { name: `%${filters.name}%` })
+      query.andWhere('UPPER(expense.name) like :name', {
+        name: `%${filters.name}%`,
+      })
     }
 
     if (filters.expenseDateStart) {
-      query.where('expense.expenseDate >= :expenseDateStart', {
+      query.andWhere('expense.expenseDate >= :expenseDateStart', {
         expenseDateStart: `%${filters.expenseDateStart}%`,
       })
     }
 
     if (filters.expenseDateEnd) {
-      query.where('expense.expenseDate >= :expenseDateEnd', {
+      query.andWhere('expense.expenseDate <= :expenseDateEnd', {
         expenseDateEnd: `%${filters.expenseDateEnd}%`,
       })
     }
 
     if (filters.expenseTypeId) {
-      query.where('expense.expenseTypeId = :expenseTypeId', {
+      query.andWhere('expense.expenseTypeId = :expenseTypeId', {
         expenseTypeId: `${filters.expenseTypeId}`,
       })
+    }
+
+    query.orderBy('expense.expenseDate', 'DESC')
+
+    if (filters.offset && filters.limit) {
+      const offset = parseInt(filters.offset)
+      const limit = parseInt(filters.limit)
+      query.skip(offset).take(limit)
     }
 
     return await query.getMany()
@@ -64,6 +73,14 @@ class ExpenseRepository implements IExpenseRepository {
 
   async getByExpenseTypeId(expenseTypeId: string): Promise<Expense[]> {
     return await this.repository.find({ where: { expenseTypeId } })
+  }
+
+  async getCountAllByUserId(userId: string): Promise<number> {
+    const query = this.repository
+      .createQueryBuilder('expense')
+      .where('expense.userId = :userId', { userId })
+
+    return query.getCount()
   }
 }
 

@@ -9,6 +9,7 @@ interface IExpenseRepository {
     userId: string,
     filters: IListExpenseDTO,
   ): Promise<Expense[]>
+  getCountAllByUserId(userId: string): Promise<number>
   getById(id: string): Promise<Expense>
   getByExpenseTypeId(expenseTypeId: string): Promise<Expense[]>
 }

@@ -37,9 +37,9 @@ class ExpenseController {
     const filters = request.query
 
     const expenseUseCase = container.resolve(ExpenseUseCase)
-    const expenses = await expenseUseCase.listExpense(userId, filters)
+    const result = await expenseUseCase.listExpense(userId, filters)
 
-    return response.status(200).json(expenses)
+    return response.status(200).json(result)
   }
 
   async updateExpenseController(request: Request, response: Response) {

@@ -7,7 +7,8 @@ import { IDateProvider } from '@shared/container/providers/DateProvider/IDatePro
 import {
   IRequestListExpense,
   IResponseCreateExpense,
-} from './IRequest/IRequest'
+} from './Interfaces/IRequest'
+import { IResponseListExpense } from './Interfaces/IResponse'
 
 @injectable()
 class ExpenseUseCase {
@@ -82,12 +83,22 @@ class ExpenseUseCase {
   async listExpense(
     userId: string,
     filters: IRequestListExpense,
-  ): Promise<Expense[]> {
+  ): Promise<IResponseListExpense> {
     try {
-      return await this.expensesRepository.getAllByUserIdAndFilters(
+      if (filters.name) {
+        filters.name = filters.name.toUpperCase()
+      }
+
+      const expenses = await this.expensesRepository.getAllByUserIdAndFilters(
         userId,
         filters,
       )
+
+      const countExpenses = await this.expensesRepository.getCountAllByUserId(
+        userId,
+      )
+
+      return { expenses, countExpenses }
     } catch (error) {
       throw new AppError('Ocorreu um erro ao buscar as despesas!', 500, error)
     }

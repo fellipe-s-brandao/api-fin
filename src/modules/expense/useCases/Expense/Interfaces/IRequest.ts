@@ -13,4 +13,6 @@ export interface IRequestListExpense {
   expenseTypeId?: string
   expenseDateStart?: Date
   expenseDateEnd?: Date
+  offset?: string
+  limit?: string
 }
