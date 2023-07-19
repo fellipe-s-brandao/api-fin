@@ -1,6 +1,9 @@
 import { Profit } from '../infra/typeorm/entities/Profit'
-import { ICreateProfitDTO } from '../useCases/Profit/dto/ICreateProfitDTO'
-import { IListProfitDTO } from '../useCases/Profit/dto/IListProfitDTO'
+import {
+  ICreateProfitDTO,
+  IGetTotalizersDTO,
+  IListProfitDTO,
+} from '../useCases/Profit/dto/ProfitDTO'
 
 interface IProfitRepository {
   create(data: ICreateProfitDTO): Promise<Profit>
@@ -12,6 +15,10 @@ interface IProfitRepository {
   ): Promise<Profit[]>
   getAllByProfitTypeId(profitTypeId: string): Promise<Profit[]>
   getCountAllByUserId(userId: string): Promise<number>
+  getTotalizersByUserIdAndFilters(
+    userId: string,
+    filters: IGetTotalizersDTO,
+  ): Promise<number>
 }
 
 export { IProfitRepository }

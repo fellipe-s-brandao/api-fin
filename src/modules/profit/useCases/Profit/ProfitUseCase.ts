@@ -1,11 +1,14 @@
 import { AppError } from '@shared/errors/AppError'
 import { inject, injectable } from 'tsyringe'
-import { ICreateProfitDTO } from './dto/ICreateProfitDTO'
 import { IProfitRepository } from '@modules/profit/repositories/IProfitRepository'
 import { Profit } from '@modules/profit/infra/typeorm/entities/Profit'
 import { IDateProvider } from '@shared/container/providers/DateProvider/IDateProvider'
-import { IRequestListProfit } from './interfaces/IRequest'
+import {
+  IRequestListProfit,
+  IResquestCreateProfit,
+} from './interfaces/IRequest'
 import { IResponseListProfit } from './interfaces/IResponse'
+import { IGetTotalizersDTO } from './dto/ProfitDTO'
 
 @injectable()
 class ProfitUseCase {
@@ -17,7 +20,7 @@ class ProfitUseCase {
     private dayJsDateProvider: IDateProvider,
   ) {}
 
-  async createProfit(data: ICreateProfitDTO): Promise<Profit> {
+  async createProfit(data: IResquestCreateProfit): Promise<Profit> {
     try {
       if (!data.name) {
         throw new AppError('Nome do lucro não foi informado!')
@@ -108,7 +111,7 @@ class ProfitUseCase {
     }
   }
 
-  async updateProfit(data: ICreateProfitDTO): Promise<Profit> {
+  async updateProfit(data: IResquestCreateProfit): Promise<Profit> {
     try {
       if (
         !data.name &&
@@ -132,6 +135,27 @@ class ProfitUseCase {
       return await this.profitRepository.create(profit)
     } catch (error) {
       throw new AppError('Ocorreu um erro ao atualizar lucro', 500, error)
+    }
+  }
+
+  async getTotalizers(userId: string): Promise<any> {
+    // Buscar soma lucros - mes
+    const month = this.dayJsDateProvider.dateNow().getMonth()
+    let filters: IGetTotalizersDTO = { month }
+
+    const monthTotalizers =
+      this.profitRepository.getTotalizersByUserIdAndFilters(userId, filters)
+
+    // Buscar soma lucros - semana
+    const week = this.dayJsDateProvider.dateNow().getMonth()
+    filters = { week }
+
+    const weekTotalizers =
+      this.profitRepository.getTotalizersByUserIdAndFilters(userId, filters)
+
+    return {
+      monthTotalizers,
+      weekTotalizers,
     }
   }
 }

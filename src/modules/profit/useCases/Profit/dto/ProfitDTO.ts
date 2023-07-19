@@ -1,4 +1,4 @@
-export interface IResquestCreateProfit {
+export interface ICreateProfitDTO {
   id?: string
   name: string
   description: string
@@ -8,11 +8,16 @@ export interface IResquestCreateProfit {
   userId: string
 }
 
-export interface IRequestListProfit {
+export interface IListProfitDTO {
   name?: string
   profitTypeId?: string
   profitDateStart?: Date
   profitDateEnd?: Date
   offset?: string
   limit?: string
+}
+
+export interface IGetTotalizersDTO {
+  week?: number
+  month?: number
 }

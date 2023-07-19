@@ -6,7 +6,7 @@ import { IExpenseTypeRepository } from '@modules/expense/repositories/IExpenseTy
 import { IDateProvider } from '@shared/container/providers/DateProvider/IDateProvider'
 import {
   IRequestListExpense,
-  IResponseCreateExpense,
+  IResquestCreateExpense,
 } from './Interfaces/IRequest'
 import { IResponseListExpense } from './Interfaces/IResponse'
 
@@ -23,7 +23,7 @@ class ExpenseUseCase {
     private dayJsDateProvider: IDateProvider,
   ) {}
 
-  async createExpense(data: IResponseCreateExpense): Promise<Expense> {
+  async createExpense(data: IResquestCreateExpense): Promise<Expense> {
     try {
       if (!data.name) {
         throw new AppError('Nome da despesa não foi informada!')
@@ -104,7 +104,7 @@ class ExpenseUseCase {
     }
   }
 
-  async updateExpense(data: IResponseCreateExpense): Promise<Expense> {
+  async updateExpense(data: IResquestCreateExpense): Promise<Expense> {
     try {
       if (
         !data.name &&

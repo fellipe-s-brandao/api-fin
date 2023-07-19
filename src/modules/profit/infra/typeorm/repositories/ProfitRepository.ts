@@ -1,8 +1,10 @@
 import { Repository, getRepository } from 'typeorm'
 import { Profit } from '../entities/Profit'
 import { IProfitRepository } from '@modules/profit/repositories/IProfitRepository'
-import { ICreateProfitDTO } from '@modules/profit/useCases/Profit/dto/ICreateProfitDTO'
-import { IListProfitDTO } from '@modules/profit/useCases/Profit/dto/IListProfitDTO'
+import {
+  ICreateProfitDTO,
+  IListProfitDTO,
+} from '@modules/profit/useCases/Profit/dto/ProfitDTO'
 
 class ProfitRepository implements IProfitRepository {
   private repository: Repository<Profit>
@@ -80,6 +82,32 @@ class ProfitRepository implements IProfitRepository {
       .createQueryBuilder('profit')
       .where('profit.userId = :userId', { userId })
       .getCount()
+  }
+
+  async getTotalizersByUserIdAndFilters(
+    userId: string,
+    filters: any,
+  ): Promise<number> {
+    const query = this.repository
+      .createQueryBuilder('profit')
+      .select('SUM(profit.profitAmount)', 'sum')
+      .where('profit.userId = :userId', { userId })
+
+    if (filters.week) {
+      query.andWhere('WEEK(profit.profitDate) = :week', {
+        week: `%${filters.week}%`,
+      })
+    }
+
+    if (filters.month) {
+      query.andWhere('MONTH(profit.profitDate) = :month', {
+        month: `%${filters.month}%`,
+      })
+    }
+
+    const result = await query.getRawOne()
+
+    return result ? result.sum : 0
   }
 }
 

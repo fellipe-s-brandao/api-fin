@@ -1,4 +1,4 @@
-export interface IResponseCreateExpense {
+export interface IResquestCreateExpense {
   id?: string
   name: string
   description: string
