@@ -34,10 +34,10 @@ class ProfitController {
 
   async listProfitController(request: Request, response: Response) {
     const { id: userId } = request.user
+    const filters = request.query
 
     const profitUseCase = container.resolve(ProfitUseCase)
-
-    const profits = await profitUseCase.listProfit(userId)
+    const profits = await profitUseCase.listProfit(userId, filters)
 
     return response.status(200).json(profits)
   }

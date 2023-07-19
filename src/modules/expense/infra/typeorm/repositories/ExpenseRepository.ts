@@ -76,11 +76,10 @@ class ExpenseRepository implements IExpenseRepository {
   }
 
   async getCountAllByUserId(userId: string): Promise<number> {
-    const query = this.repository
+    return await this.repository
       .createQueryBuilder('expense')
       .where('expense.userId = :userId', { userId })
-
-    return query.getCount()
+      .getCount()
   }
 }
 

@@ -2,6 +2,7 @@ import { Repository, getRepository } from 'typeorm'
 import { Profit } from '../entities/Profit'
 import { IProfitRepository } from '@modules/profit/repositories/IProfitRepository'
 import { ICreateProfitDTO } from '@modules/profit/useCases/Profit/dto/ICreateProfitDTO'
+import { IListProfitDTO } from '@modules/profit/useCases/Profit/dto/IListProfitDTO'
 
 class ProfitRepository implements IProfitRepository {
   private repository: Repository<Profit>
@@ -22,13 +23,48 @@ class ProfitRepository implements IProfitRepository {
     await this.repository.delete(id)
   }
 
-  async getAllByUserId(userId: string): Promise<Profit[]> {
-    return await this.repository
+  async getAllByUserIdAndFilters(
+    userId: string,
+    filters: IListProfitDTO,
+  ): Promise<Profit[]> {
+    const query = this.repository
       .createQueryBuilder('profit')
       .innerJoinAndSelect('profit.profitType', 'profitType')
       .where('profit.userId = :userId', { userId })
-      .orderBy('profit.profitDate', 'DESC')
-      .getMany()
+
+    if (filters.name) {
+      query.andWhere('UPPER(expense.name) like :name', {
+        name: `%${filters.name}%`,
+      })
+    }
+
+    if (filters.profitDateStart) {
+      query.andWhere('profit.profitDate >= :expenseDateStart', {
+        profitDateStart: `%${filters.profitDateStart}%`,
+      })
+    }
+
+    if (filters.ptofitDateEnd) {
+      query.andWhere('profit.profitDate <= :expenseDateEnd', {
+        ptofitDateEnd: `%${filters.ptofitDateEnd}%`,
+      })
+    }
+
+    if (filters.profitTypeId) {
+      query.andWhere('profit.profitTypeId = :profitTypeId', {
+        profitTypeId: `${filters.profitTypeId}`,
+      })
+    }
+
+    query.orderBy('profit.profitDate', 'DESC')
+
+    if (filters.offset && filters.limit) {
+      const offset = parseInt(filters.offset)
+      const limit = parseInt(filters.limit)
+      query.skip(offset).take(limit)
+    }
+
+    return await query.getMany()
   }
 
   async getById(id: string): Promise<Profit> {
@@ -37,6 +73,13 @@ class ProfitRepository implements IProfitRepository {
 
   async getAllByProfitTypeId(profitTypeId: string): Promise<Profit[]> {
     return await this.repository.find({ where: { profitTypeId } })
+  }
+
+  async getCountAllByUserId(userId: string): Promise<number> {
+    return await this.repository
+      .createQueryBuilder('profit')
+      .where('profit.userId = :userId', { userId })
+      .getCount()
   }
 }
 

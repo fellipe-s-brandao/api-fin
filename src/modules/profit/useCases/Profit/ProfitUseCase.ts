@@ -4,6 +4,8 @@ import { ICreateProfitDTO } from './dto/ICreateProfitDTO'
 import { IProfitRepository } from '@modules/profit/repositories/IProfitRepository'
 import { Profit } from '@modules/profit/infra/typeorm/entities/Profit'
 import { IDateProvider } from '@shared/container/providers/DateProvider/IDateProvider'
+import { IRequestListProfit } from './interfaces/IRequest'
+import { IResponseListProfit } from './interfaces/IResponse'
 
 @injectable()
 class ProfitUseCase {
@@ -64,9 +66,25 @@ class ProfitUseCase {
     }
   }
 
-  async listProfit(userId: string): Promise<Profit[]> {
+  async listProfit(
+    userId: string,
+    filters: IRequestListProfit,
+  ): Promise<IResponseListProfit> {
     try {
-      return await this.profitRepository.getAllByUserId(userId)
+      if (filters.name) {
+        filters.name = filters.name.toUpperCase()
+      }
+
+      const profits = await this.profitRepository.getAllByUserIdAndFilters(
+        userId,
+        filters,
+      )
+
+      const countProfits = await this.profitRepository.getCountAllByUserId(
+        userId,
+      )
+
+      return { profits, countProfits }
     } catch (error) {
       throw new AppError('Ocorreu um erro ao buscar lucros', 500, error)
     }
