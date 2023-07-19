@@ -33,20 +33,20 @@ class ProfitRepository implements IProfitRepository {
       .where('profit.userId = :userId', { userId })
 
     if (filters.name) {
-      query.andWhere('UPPER(expense.name) like :name', {
+      query.andWhere('UPPER(profit.name) like :name', {
         name: `%${filters.name}%`,
       })
     }
 
     if (filters.profitDateStart) {
-      query.andWhere('profit.profitDate >= :expenseDateStart', {
+      query.andWhere('profit.profitDate >= :profitDateStart', {
         profitDateStart: `%${filters.profitDateStart}%`,
       })
     }
 
-    if (filters.ptofitDateEnd) {
-      query.andWhere('profit.profitDate <= :expenseDateEnd', {
-        ptofitDateEnd: `%${filters.ptofitDateEnd}%`,
+    if (filters.profitDateEnd) {
+      query.andWhere('profit.profitDate <= :profitDateEnd', {
+        profitDateEnd: `%${filters.profitDateEnd}%`,
       })
     }
 

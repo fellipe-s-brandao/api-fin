@@ -2,7 +2,7 @@ export interface IRequestListProfit {
   name?: string
   profitTypeId?: string
   profitDateStart?: Date
-  ptofitDateEnd?: Date
+  profitDateEnd?: Date
   offset?: string
   limit?: string
 }
