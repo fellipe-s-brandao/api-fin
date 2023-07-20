@@ -6,7 +6,7 @@ services:
     container_name: database_finances
     restart: always
     ports:
-      - 5432:5432
+      - 5430:5432
     environment:
       - POSTGRES_USER=boraAdmin
       - POSTGRES_PASSWORD=AdminBora#123@

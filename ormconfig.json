@@ -1,6 +1,6 @@
 {
     "type": "postgres",
-    "port": 5432,
+    "port": 5430,
     "host": "localhost",
     "username": "boraAdmin",
     "password": "AdminBora#123@",
