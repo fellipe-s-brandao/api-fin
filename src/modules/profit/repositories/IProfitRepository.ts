@@ -14,7 +14,10 @@ interface IProfitRepository {
     filters: IListProfitDTO,
   ): Promise<Profit[]>
   getAllByProfitTypeId(profitTypeId: string): Promise<Profit[]>
-  getCountAllByUserId(userId: string): Promise<number>
+  getCountAllByUserId(
+    userId: string,
+    filters: IGetTotalizersDTO,
+  ): Promise<number>
   getTotalizersByUserIdAndFilters(
     userId: string,
     filters: IGetTotalizersDTO,

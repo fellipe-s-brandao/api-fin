@@ -72,6 +72,15 @@ class ProfitController {
 
     return response.status(200).json(profit)
   }
+
+  async getTotalizersController(request: Request, response: Response) {
+    const { id: userId } = request.user
+
+    const profitUseCase = container.resolve(ProfitUseCase)
+    const totalizers = await profitUseCase.getTotalizers(userId)
+
+    return response.status(200).json(totalizers)
+  }
 }
 
 export { ProfitController }

@@ -25,6 +25,10 @@ class DayJsDateProvider implements IDateProvider {
     return dayjs().toDate()
   }
 
+  dateNowFormat(format: string): string {
+    return dayjs().format(format)
+  }
+
   compareInDays(startDate: Date, endDate: Date): number {
     const startDateUtc = this.convertToUTC(startDate)
     const endDateUtc = this.convertToUTC(endDate)
@@ -38,6 +42,10 @@ class DayJsDateProvider implements IDateProvider {
 
   addHours(hours: number): Date {
     return dayjs().add(hours, 'hour').toDate()
+  }
+
+  subtractDays(days: number): Date {
+    return dayjs().subtract(days, 'days').toDate()
   }
 }
 

@@ -85,6 +85,7 @@ class ProfitUseCase {
 
       const countProfits = await this.profitRepository.getCountAllByUserId(
         userId,
+        {},
       )
 
       return { profits, countProfits }
@@ -139,23 +140,42 @@ class ProfitUseCase {
   }
 
   async getTotalizers(userId: string): Promise<any> {
-    // Buscar soma lucros - mes
-    const month = this.dayJsDateProvider.dateNow().getMonth()
-    let filters: IGetTotalizersDTO = { month }
+    try {
+      // Buscar soma lucros - mes
+      const month = this.dayJsDateProvider.dateNowFormat('MM')
+      let filters: IGetTotalizersDTO = { month }
 
-    const monthTotalizers =
-      this.profitRepository.getTotalizersByUserIdAndFilters(userId, filters)
+      const monthTotalizers =
+        await this.profitRepository.getTotalizersByUserIdAndFilters(
+          userId,
+          filters,
+        )
 
-    // Buscar soma lucros - semana
-    const week = this.dayJsDateProvider.dateNow().getMonth()
-    filters = { week }
+      // Busca a qtd de lucros no mes
+      const countMonthProfits = await this.profitRepository.getCountAllByUserId(
+        userId,
+        filters,
+      )
 
-    const weekTotalizers =
-      this.profitRepository.getTotalizersByUserIdAndFilters(userId, filters)
+      // Buscar soma lucros - semana
+      const profitDateStart = this.dayJsDateProvider.subtractDays(7)
+      const profitDateEnd = this.dayJsDateProvider.dateNow()
 
-    return {
-      monthTotalizers,
-      weekTotalizers,
+      filters = { profitDateStart, profitDateEnd }
+
+      const weekTotalizers =
+        await this.profitRepository.getTotalizersByUserIdAndFilters(
+          userId,
+          filters,
+        )
+
+      return {
+        monthTotalizers,
+        countMonthProfits,
+        weekTotalizers,
+      }
+    } catch (error) {
+      throw new AppError('Ocorreu um erro ao atualizar lucro', 500, error)
     }
   }
 }

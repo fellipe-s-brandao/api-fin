@@ -3,6 +3,7 @@ import { Profit } from '../entities/Profit'
 import { IProfitRepository } from '@modules/profit/repositories/IProfitRepository'
 import {
   ICreateProfitDTO,
+  IGetTotalizersDTO,
   IListProfitDTO,
 } from '@modules/profit/useCases/Profit/dto/ProfitDTO'
 
@@ -77,11 +78,33 @@ class ProfitRepository implements IProfitRepository {
     return await this.repository.find({ where: { profitTypeId } })
   }
 
-  async getCountAllByUserId(userId: string): Promise<number> {
-    return await this.repository
+  async getCountAllByUserId(
+    userId: string,
+    filters: IGetTotalizersDTO,
+  ): Promise<number> {
+    const query = this.repository
       .createQueryBuilder('profit')
       .where('profit.userId = :userId', { userId })
-      .getCount()
+
+    if (filters.profitDateStart) {
+      query.andWhere('profit.profitDate >= :profitDateStart', {
+        profitDateStart: `%${filters.profitDateStart}%`,
+      })
+    }
+
+    if (filters.profitDateEnd) {
+      query.andWhere('profit.profitDate <= :profitDateEnd', {
+        profitDateEnd: `%${filters.profitDateEnd}%`,
+      })
+    }
+
+    if (filters.month) {
+      query.andWhere('EXTRACT(MONTH FROM profit.profitDate) = :month', {
+        month: filters.month,
+      })
+    }
+
+    return await query.getCount()
   }
 
   async getTotalizersByUserIdAndFilters(
@@ -93,21 +116,27 @@ class ProfitRepository implements IProfitRepository {
       .select('SUM(profit.profitAmount)', 'sum')
       .where('profit.userId = :userId', { userId })
 
-    if (filters.week) {
-      query.andWhere('WEEK(profit.profitDate) = :week', {
-        week: `%${filters.week}%`,
+    if (filters.profitDateStart) {
+      query.andWhere('profit.profitDate >= :profitDateStart', {
+        profitDateStart: filters.profitDateStart,
+      })
+    }
+
+    if (filters.profitDateEnd) {
+      query.andWhere('profit.profitDate <= :profitDateEnd', {
+        profitDateEnd: filters.profitDateEnd,
       })
     }
 
     if (filters.month) {
-      query.andWhere('MONTH(profit.profitDate) = :month', {
-        month: `%${filters.month}%`,
+      query.andWhere('EXTRACT(MONTH FROM profit.profitDate) = :month', {
+        month: filters.month,
       })
     }
 
     const result = await query.getRawOne()
 
-    return result ? result.sum : 0
+    return result.sum || 0
   }
 }
 

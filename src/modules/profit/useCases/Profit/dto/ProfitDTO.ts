@@ -18,6 +18,7 @@ export interface IListProfitDTO {
 }
 
 export interface IGetTotalizersDTO {
-  week?: number
-  month?: number
+  profitDateStart?: Date
+  profitDateEnd?: Date
+  month?: string
 }

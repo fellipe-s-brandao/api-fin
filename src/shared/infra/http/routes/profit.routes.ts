@@ -35,4 +35,10 @@ profitRoutes.delete(
   profitController.delteProfitController,
 )
 
+profitRoutes.get(
+  '/totalizers',
+  ensureAuthenticated,
+  profitController.getTotalizersController,
+)
+
 export { profitRoutes }
