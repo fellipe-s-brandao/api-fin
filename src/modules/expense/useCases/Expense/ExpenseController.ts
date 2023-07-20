@@ -71,6 +71,15 @@ class ExpenseController {
 
     return response.status(200).json(expenses)
   }
+
+  async getTotalizersController(request: Request, response: Response) {
+    const { id: userId } = request.user
+
+    const expenseUseCase = container.resolve(ExpenseUseCase)
+    const totalizers = await expenseUseCase.getTotalizers(userId)
+
+    return response.status(200).json(totalizers)
+  }
 }
 
 export { ExpenseController }

@@ -1,8 +1,11 @@
 import { IExpenseRepository } from '@modules/expense/repositories/IExpenseRepository'
 import { getRepository, Repository } from 'typeorm'
 import { Expense } from '../entities/Expense'
-import { ICreateExpenseDTO } from '@modules/expense/useCases/Expense/dto/ICreateExpenseDTO'
-import { IListExpenseDTO } from '@modules/expense/useCases/Expense/dto/IListExpenseDTO'
+import {
+  ICreateExpenseDTO,
+  IGetTotalizersDTO,
+  IListExpenseDTO,
+} from '@modules/expense/useCases/Expense/dto/ExpenseDTO'
 
 class ExpenseRepository implements IExpenseRepository {
   private repository: Repository<Expense>
@@ -75,11 +78,65 @@ class ExpenseRepository implements IExpenseRepository {
     return await this.repository.find({ where: { expenseTypeId } })
   }
 
-  async getCountAllByUserId(userId: string): Promise<number> {
-    return await this.repository
+  async getCountAllByUserId(
+    userId: string,
+    filters: IGetTotalizersDTO,
+  ): Promise<number> {
+    const query = this.repository
       .createQueryBuilder('expense')
       .where('expense.userId = :userId', { userId })
-      .getCount()
+
+    if (filters.expenseDateStart) {
+      query.andWhere('expense.expenseDate >= :expenseDateStart', {
+        expenseDateStart: `%${filters.expenseDateStart}%`,
+      })
+    }
+
+    if (filters.expenseDateEnd) {
+      query.andWhere('expense.expenseDate <= :expenseDateEnd', {
+        expenseDateEnd: `%${filters.expenseDateEnd}%`,
+      })
+    }
+
+    if (filters.month) {
+      query.andWhere('EXTRACT(MONTH FROM expense.expenseDate) = :month', {
+        month: filters.month,
+      })
+    }
+
+    return await query.getCount()
+  }
+
+  async getTotalizersByUserIdAndFilters(
+    userId: string,
+    filters: IGetTotalizersDTO,
+  ): Promise<number> {
+    const query = this.repository
+      .createQueryBuilder('expense')
+      .select('SUM(expense.amountSpent)', 'sum')
+      .where('expense.userId = :userId', { userId })
+
+    if (filters.expenseDateStart) {
+      query.andWhere('expense.expenseDate >= :expenseDateStart', {
+        expenseDateStart: `%${filters.expenseDateStart}%`,
+      })
+    }
+
+    if (filters.expenseDateEnd) {
+      query.andWhere('expense.expenseDate <= :expenseDateEnd', {
+        expenseDateEnd: `%${filters.expenseDateEnd}%`,
+      })
+    }
+
+    if (filters.month) {
+      query.andWhere('EXTRACT(MONTH FROM expense.expenseDate) = :month', {
+        month: filters.month,
+      })
+    }
+
+    const result = await query.getRawOne()
+
+    return result.sum || 0
   }
 }
 

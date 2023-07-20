@@ -47,6 +47,10 @@ class DayJsDateProvider implements IDateProvider {
   subtractDays(days: number): Date {
     return dayjs().subtract(days, 'days').toDate()
   }
+
+  convertToFormatDb(date: Date): string {
+    return dayjs(date, 'YYYY-MM-DD HH:mm:ss').toString()
+  }
 }
 
 export { DayJsDateProvider }

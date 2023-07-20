@@ -161,7 +161,11 @@ class ProfitUseCase {
       const profitDateStart = this.dayJsDateProvider.subtractDays(7)
       const profitDateEnd = this.dayJsDateProvider.dateNow()
 
-      filters = { profitDateStart, profitDateEnd }
+      filters = {
+        profitDateStart:
+          this.dayJsDateProvider.convertToFormatDb(profitDateStart),
+        profitDateEnd: this.dayJsDateProvider.convertToFormatDb(profitDateEnd),
+      }
 
       const weekTotalizers =
         await this.profitRepository.getTotalizersByUserIdAndFilters(
@@ -175,7 +179,7 @@ class ProfitUseCase {
         weekTotalizers,
       }
     } catch (error) {
-      throw new AppError('Ocorreu um erro ao atualizar lucro', 500, error)
+      throw new AppError('Ocorreu um erro ao buscar totalizadores!', 500, error)
     }
   }
 }

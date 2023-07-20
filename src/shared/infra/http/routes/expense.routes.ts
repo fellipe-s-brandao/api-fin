@@ -35,4 +35,10 @@ expenseRoutes.get(
   expenseController.listExpenseByIdController,
 )
 
+expenseRoutes.get(
+  '/totalizers',
+  ensureAuthenticated,
+  expenseController.getTotalizersController,
+)
+
 export { expenseRoutes }

@@ -9,6 +9,7 @@ import {
   IResquestCreateExpense,
 } from './Interfaces/IRequest'
 import { IResponseListExpense } from './Interfaces/IResponse'
+import { IGetTotalizersDTO } from './dto/ExpenseDTO'
 
 @injectable()
 class ExpenseUseCase {
@@ -96,6 +97,7 @@ class ExpenseUseCase {
 
       const countExpenses = await this.expensesRepository.getCountAllByUserId(
         userId,
+        {},
       )
 
       return { expenses, countExpenses }
@@ -146,6 +148,49 @@ class ExpenseUseCase {
       return expense
     } catch (error) {
       throw new AppError('Ocorreu um erro ao buscar a despesa!', 500, error)
+    }
+  }
+
+  async getTotalizers(userId: string): Promise<any> {
+    try {
+      // Buscar soma despesas - mes
+      const month = this.dayJsDateProvider.dateNowFormat('MM')
+      let filters: IGetTotalizersDTO = { month }
+
+      const monthTotalizers =
+        await this.expensesRepository.getTotalizersByUserIdAndFilters(
+          userId,
+          filters,
+        )
+
+      // Busca a qtd de despesas no mes
+      const countMonthProfits =
+        await this.expensesRepository.getCountAllByUserId(userId, filters)
+
+      // Buscar soma despesas - semana
+      const expenseDateStart = this.dayJsDateProvider.subtractDays(7)
+      const expenseDateEnd = this.dayJsDateProvider.dateNow()
+
+      filters = {
+        expenseDateEnd:
+          this.dayJsDateProvider.convertToFormatDb(expenseDateEnd),
+        expenseDateStart:
+          this.dayJsDateProvider.convertToFormatDb(expenseDateStart),
+      }
+
+      const weekTotalizers =
+        await this.expensesRepository.getTotalizersByUserIdAndFilters(
+          userId,
+          filters,
+        )
+
+      return {
+        monthTotalizers,
+        countMonthProfits,
+        weekTotalizers,
+      }
+    } catch (error) {
+      throw new AppError('Ocorreu um erro ao buscar totalizadores!', 500, error)
     }
   }
 }

@@ -1,6 +1,9 @@
 import { Expense } from '../infra/typeorm/entities/Expense'
-import { ICreateExpenseDTO } from '../useCases/Expense/dto/ICreateExpenseDTO'
-import { IListExpenseDTO } from '../useCases/Expense/dto/IListExpenseDTO'
+import {
+  ICreateExpenseDTO,
+  IGetTotalizersDTO,
+  IListExpenseDTO,
+} from '../useCases/Expense/dto/ExpenseDTO'
 
 interface IExpenseRepository {
   create(data: ICreateExpenseDTO): Promise<Expense>
@@ -9,7 +12,14 @@ interface IExpenseRepository {
     userId: string,
     filters: IListExpenseDTO,
   ): Promise<Expense[]>
-  getCountAllByUserId(userId: string): Promise<number>
+  getCountAllByUserId(
+    userId: string,
+    filters: IGetTotalizersDTO,
+  ): Promise<number>
+  getTotalizersByUserIdAndFilters(
+    userId: string,
+    filters: IGetTotalizersDTO,
+  ): Promise<number>
   getById(id: string): Promise<Expense>
   getByExpenseTypeId(expenseTypeId: string): Promise<Expense[]>
 }

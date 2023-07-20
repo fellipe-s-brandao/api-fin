@@ -109,7 +109,7 @@ class ProfitRepository implements IProfitRepository {
 
   async getTotalizersByUserIdAndFilters(
     userId: string,
-    filters: any,
+    filters: IGetTotalizersDTO,
   ): Promise<number> {
     const query = this.repository
       .createQueryBuilder('profit')
@@ -118,13 +118,13 @@ class ProfitRepository implements IProfitRepository {
 
     if (filters.profitDateStart) {
       query.andWhere('profit.profitDate >= :profitDateStart', {
-        profitDateStart: filters.profitDateStart,
+        profitDateStart: `%${filters.profitDateStart}%`,
       })
     }
 
     if (filters.profitDateEnd) {
       query.andWhere('profit.profitDate <= :profitDateEnd', {
-        profitDateEnd: filters.profitDateEnd,
+        profitDateEnd: `%${filters.profitDateEnd}%`,
       })
     }
 

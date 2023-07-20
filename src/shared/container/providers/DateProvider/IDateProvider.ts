@@ -8,6 +8,7 @@ interface IDateProvider {
   subtractDays(days: number): Date
   addHours(hours: number): Date
   toDate(date: Date): Date
+  convertToFormatDb(date: Date): string
 }
 
 export { IDateProvider }
