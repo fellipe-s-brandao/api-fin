@@ -1,10 +1,10 @@
 {
     "type": "postgres",
-    "port": 5430,
-    "host": "localhost",
-    "username": "boraAdmin",
-    "password": "AdminBora#123@",
-    "database": "finances",
+    "port": "",
+    "host": "",
+    "username": "",
+    "password": "",
+    "database": "",
     "migrations": ["./src/shared/infra/typeorm/migrations/*.ts"],
     "entities": ["./src/modules/**/entities/*.ts"],
     "cli": {

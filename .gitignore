@@ -1,4 +1,7 @@
 /node_modules
 yarn.lock
+yarn-error.log
+package-lock.jsonn
+ormconfig.json
 .env
 /dist
