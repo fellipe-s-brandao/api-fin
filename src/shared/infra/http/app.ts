@@ -2,7 +2,6 @@ import 'reflect-metadata'
 import express, { NextFunction, Request, Response } from 'express'
 import 'express-async-errors'
 import { router } from './routes'
-import { AppError } from '@shared/errors/AppError'
 
 import cors from 'cors'
 
@@ -10,6 +9,7 @@ import '@shared/container'
 
 import createConnection from '@shared/infra/typeorm'
 import { QueryError } from '@shared/errors/QueryError'
+import { AppError } from '@shared/errors/AppError'
 
 process.env.TZ = 'America/Sao_Paulo'
 createConnection()

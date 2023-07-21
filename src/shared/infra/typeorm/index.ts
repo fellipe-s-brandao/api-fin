@@ -13,7 +13,7 @@ export default async (): Promise<Connection> => {
 
   return createConnection(
     Object.assign(defaultOptions, {
-      host: 'database_finances',
+      host: process.env.DOCKER_SERVICE_PG,
       database: defaultOptions.database,
     }),
   )
